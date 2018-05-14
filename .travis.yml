@@ -19,7 +19,7 @@ after_script:
 deploy:
   provider: npm
   skip_cleanup: true
-  email: rafalnowosielski@me.com
+  email: trdlnk@cimpress.com
   api_key:
     secure: Pgj5f+iQ4foVi69j5LJk5JZk+15bzyTMeWi3GnOinwaR7Uy/JwiyrKb4jkZd9qxvOohYXOQAlyjuKjfQw+osVFipwu6yJeVAZa9ZeXDFnPKC/i9SYxioUxgdTMkzjxNsXlLVmEYBw2C5Je9HaTVRXDjYgrLBIHrBlBm24nFZkO6nEpeaY0EwM/cfS+HM35zIKWobcj8zE1Bn/NMlOvT+omMMicliET53JFQFne7snxMC2qyioQZ2sOozzh9rlNo62poBaYKzthIJKBOOkHwTtqB7Fh0zJchxoKHuPUwOunz+vu5pEYJCRfOf/ep1udhGW9tdRMoAYTC1LlgkMp0E6yjGEtgUnDfPR5F8pbCJj+fF+AgkLU3lWGoD16cr1kLIgd3Yg3LieGRtf0+5QcirXa6PlSRoLUnI6h1cOX23A5LJaQJGeJ3ZKIxmkB2zzWcBvC6IfBDPrg3YWi1z+b6bc+J+reG7hpPzp/VpRLhyhWJtLxkOagHCCkmoH0ljDeaxDRWjiyoUYULu6xRNjJKLkKeRYn7sJutmU99GQvKuF44uxVeOeOpLmDW3gFfQubGBSw7fAABNOkvBtwYvQWb9MNG88dIERIUWX8gubkVEbZtL+DmcNmJBeHGWnm0wLX5xMtTYdaGAG37W/1OG4a/eEIWs+JEjMyq3Is6v6rUq+98=
   on:
