@@ -1,6 +1,6 @@
 {
   "name": "react-cimpress-fulfillers-components",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": {
     "name": "Trdelnik Squad",
     "email": "TrdelnikSquad@cimpress.com"
@@ -13,6 +13,9 @@
     "build": "webpack --config webpack.config.js",
     "start": "npm run build && webpack-dev-server"
   },
+  "files": [
+    "lib"
+  ],
   "peerDependencies": {
     "react": "^15.0.0 || ^16.0.0"
   },

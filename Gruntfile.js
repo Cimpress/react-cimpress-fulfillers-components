@@ -24,23 +24,7 @@ module.exports = function (grunt) {
             build: webpackConfig
         },
 
-        copy: {
-            main: {
-                files: [
-
-                    // copy all files from src/ except of .js files
-                    {
-                        expand: true,
-                        src: [
-                            'package.json',
-                            '*.md'
-                        ],
-                        dest: 'dist/'
-                    }
-                ]
-            }
-        },
-        babel: {
+         babel: {
             options: {
                 sourceMap: true,
             },
@@ -55,12 +39,12 @@ module.exports = function (grunt) {
                             'index.js',
                             '*.jsx',
                         ],
-                        dest: 'dist/lib/'
+                        dest: 'lib/'
                     }
                 ]
             }
         }
     });
 
-    grunt.registerTask('build', ['clean:dist', 'copy', 'webpack', 'babel']);
+    grunt.registerTask('build', ['clean:dist', 'webpack', 'babel']);
 };
