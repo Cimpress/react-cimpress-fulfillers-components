@@ -1,7 +1,10 @@
 {
-  "name": "@cimpress/react-fl-fi-components",
-  "version": "0.0.1",
-  "author": "TrdelnikSquad@cimpress.com, QP Squad",
+  "name": "react-cimpress-fulfillers-components",
+  "version": "0.1.1",
+  "author": {
+    "name": "Trdelnik Squad",
+    "email": "TrdelnikSquad@cimpress.com"
+  },
   "description": "A set of simple react components for rendering fulfiller/fulfillment locations information",
   "license": "Apache-2.0",
   "scripts": {
