@@ -1,16 +1,7 @@
-const webpackConfig = require('./webpack.config.js');
-const log = console;
-
-const npm = /^win/.test(process.platform)
-    ? 'npm.cmd'
-    : 'npm';
-
 module.exports = function (grunt) {
 
     require('load-grunt-tasks')(grunt);
-    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-webpack');
 
     grunt.initConfig({
 
@@ -20,17 +11,12 @@ module.exports = function (grunt) {
             dist: ['dist/']
         },
 
-        webpack: {
-            build: webpackConfig
-        },
-
-         babel: {
+        babel: {
             options: {
                 sourceMap: true,
             },
             dist: {
                 files: [
-
                     // transpile .js files
                     {
                         expand: true,
@@ -46,5 +32,5 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('build', ['clean:dist', 'webpack', 'babel']);
+    grunt.registerTask('build', ['clean:dist', 'babel']);
 };

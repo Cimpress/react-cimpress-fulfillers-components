@@ -2,8 +2,5 @@
 
 This repository is maintained by the [Trdelnik Squad](mailto:TrdelnikSquad@cimpress.com) squad.
 
-### Prerequisites
-* [Node.js](https://nodejs.org/en/)
-
 ### DEMO
-* View [demo page here](TBD)!
+* View [demo page here](https://trdlnk.cimpress.io/demo-fulfillers-components)!
