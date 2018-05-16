@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-- '6'
+- '8'
 dist: trusty
 sudo: false
 branches:
@@ -10,7 +10,6 @@ install:
 - npm install
 script:
 - npm run code-check
-- npm run-script build
 - node node_modules/grunt-cli/bin/grunt build
 deploy:
   provider: npm
