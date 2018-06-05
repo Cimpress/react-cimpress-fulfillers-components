@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import Highlighter from 'react-highlight-words';
 import Tooltip from '@cimpress/react-components/lib/Tooltip';
 
-export default class FulfillmentLocationsListItem extends React.Component {
+import {getI18nInstance} from './i18n';
+import {translate} from 'react-i18next';
+
+class FulfillmentLocationsListItem extends React.Component {
 
     constructor(props) {
         super(props);
@@ -53,7 +56,7 @@ export default class FulfillmentLocationsListItem extends React.Component {
             return (
                 <h5 style={this.style({verticalAlign: "middle"})}>
                     {this.props.isRecent 
-                        ? <Tooltip contents={"Recent location"} direction={"top"}><i className="fa fa-clock-o"></i></Tooltip>
+                        ? <Tooltip contents={this.tt("recent-location")} direction={"top"}><i className="fa fa-clock-o"></i></Tooltip>
                         : <i className="fa fa-map-marker"></i>}
                     <span>&nbsp;</span>
                     {hasFulfiller
@@ -68,7 +71,7 @@ export default class FulfillmentLocationsListItem extends React.Component {
             <h5 onClick={this.onSelected.bind(this)}
                 style={this.style({cursor: "pointer", verticalAlign: "middle"})}>
                 {this.props.isRecent 
-                    ? <Tooltip contents={"Recent location"} direction={"top"}><i className="fa fa-clock-o"></i></Tooltip>
+                    ? <Tooltip contents={this.tt("recent-location")} direction={"top"}><i className="fa fa-clock-o"></i></Tooltip>
                     : <i className="fa fa-map-marker"></i>}
                 <span>&nbsp;</span>
                 <a>
@@ -79,6 +82,11 @@ export default class FulfillmentLocationsListItem extends React.Component {
                 </a>
             </h5>
         )
+    }
+
+    tt(key) {
+        let {t, language} = this.props;
+        return t(key, {lng: language});
     }
 
     render() {
@@ -135,6 +143,11 @@ FulfillmentLocationsListItem.propTypes = {
     additionalColumnRenderer: PropTypes.func,
     customTitleRenderer: PropTypes.func,
     isRecent: PropTypes.bool,
+    language: PropTypes.string,
+
+    // silence eslint
+    t: PropTypes.any,
+    i18n: PropTypes.any
 };
 
 FulfillmentLocationsListItem.defaultProps = {
@@ -144,6 +157,9 @@ FulfillmentLocationsListItem.defaultProps = {
     showFulfillmentLocationId: true,
     additionalColumnRenderer: undefined,
     customTitleRenderer: undefined,
-    isRecent: false
+    isRecent: false,
+    language: 'eng'
 };
+
+export default translate('translations', {i18n: getI18nInstance()})(FulfillmentLocationsListItem);
 

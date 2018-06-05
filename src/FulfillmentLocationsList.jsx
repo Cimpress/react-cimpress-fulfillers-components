@@ -4,7 +4,10 @@ import FulfillmentLocationsListItem from './FulfillmentLocationsListItem';
 import Alert from '@cimpress/react-components/lib/Alert';
 import TextField from '@cimpress/react-components/lib/TextField';
 
-export default class FulfillmentLocationsList extends React.Component {
+import {getI18nInstance} from './i18n';
+import {translate} from 'react-i18next';
+
+class FulfillmentLocationsList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -14,13 +17,13 @@ export default class FulfillmentLocationsList extends React.Component {
     }
 
     isLocationMatching(location) {
-        if (!this.state.searchNeedle) {
+        if ( !this.state.searchNeedle ) {
             return true;
         }
 
         const searchFor = this.state.searchNeedle.toLowerCase();
         return (location.FulfillerName.toLowerCase()
-                .indexOf(searchFor) !== -1)
+            .indexOf(searchFor) !== -1)
             || (location.FulfillmentLocationName.toLowerCase()
                 .indexOf(searchFor) !== -1)
             || ((location.FulfillerId + '').indexOf(searchFor) !== -1)
@@ -36,18 +39,18 @@ export default class FulfillmentLocationsList extends React.Component {
     }
 
     renderHeader() {
-        if (!this.props.showHeader) {
+        if ( !this.props.showHeader ) {
             return null;
         }
 
         return (<thead>
         <tr className="cimpress-fl-list-header">
-            <th>Name</th>
+            <th style={{whiteSpace: "nowrap"}}>{this.tt('name')}</th>
             {this.props.showFulfillmentLocationId
-                ? (<th>Location&nbsp;Id</th>)
+                ? (<th style={{whiteSpace: "nowrap"}}>{this.tt('location-id')}</th>)
                 : null}
             {this.props.showFulfillerId
-                ? (<th>Fulfiller&nbsp;Id</th>)
+                ? (<th style={{whiteSpace: "nowrap"}}>{this.tt('fulfiller-id')}</th>)
                 : null}
             {this.props.additionalColumnTitle
                 ? (<th>{this.props.additionalColumnTitle}</th>)
@@ -57,28 +60,28 @@ export default class FulfillmentLocationsList extends React.Component {
     }
 
     style(styles) {
-        if (this.props.disableInlineStyles) {
+        if ( this.props.disableInlineStyles ) {
             return undefined;
         }
         return styles;
     }
 
     renderLocationsList(locations, recentLocations) {
-        const allLocations = recentLocations 
+        const allLocations = recentLocations
             ? recentLocations
                 .map(recentLocation => (Object.assign({}, recentLocation, {IsRecent: true})))
                 .concat(locations)
             : locations;
-        
+
         let locationsToRender = allLocations;
         let paging = null;
 
-        const length = recentLocations 
-            ? recentLocations.length + locations.length 
+        const length = recentLocations
+            ? recentLocations.length + locations.length
             : locations.length;
-        
-        if (length >= this.props.maxItemsToShowAtOnce) {
-            if (!this.props.showPartialResult) {
+
+        if ( length >= this.props.maxItemsToShowAtOnce ) {
+            if ( !this.props.showPartialResult ) {
                 // We cannot render "that many" locations
                 return this.renderFilteringHelp(allLocations);
             }
@@ -88,7 +91,7 @@ export default class FulfillmentLocationsList extends React.Component {
             locationsToRender = allLocations.slice(start, start + this.props.maxItemsToShowAtOnce);
             let hasPrev = start > 0;
             let hasNext = start + this.props.maxItemsToShowAtOnce < allLocations.length;
-            if (hasPrev || hasNext) {
+            if ( hasPrev || hasNext ) {
 
                 let pages = Math.ceil(allLocations.length / this.props.maxItemsToShowAtOnce);
                 let pageList = [];
@@ -155,7 +158,7 @@ export default class FulfillmentLocationsList extends React.Component {
                 <table className="table table-hover cimpress-fl-list">
                     {this.renderHeader()}
                     <tbody>
-                        {renderedLocations}
+                    {renderedLocations}
                     </tbody>
                 </table>
                 {this.props.showPartialResultPagingBottom
@@ -172,20 +175,27 @@ export default class FulfillmentLocationsList extends React.Component {
         return `${baseId}-${suffix}`;
     }
 
+    tt(key) {
+        let {t, language} = this.props;
+        return t(key, {lng: language});
+    }
+
     renderFiltering() {
 
-        if (!this.props.enableFiltering) {
+        if ( !this.props.enableFiltering ) {
             return null;
         }
 
         return (
             <TextField
-                label={"Search for specific location..."}
+                label={this.tt("search-label")}
                 value={this.state.searchNeedle}
                 onChange={(v) => this.setState({searchNeedle: v.target.value, pageToRender: 1})}
                 rightAddon={this.props.showCancelButton
                     ? (<button onClick={this.props.onCancelClicked} className="btn btn-default">
-                        {this.props.cancelButtonCaption}
+                        {this.props.cancelButtonCaption
+                            ? this.props.cancelButtonCaption
+                            : this.tt('cancel')}
                     </button>)
                     : undefined}
             />
@@ -194,11 +204,11 @@ export default class FulfillmentLocationsList extends React.Component {
 
     renderFilteringHelp(locations) {
 
-        if (!this.props.enableFiltering) {
+        if ( !this.props.enableFiltering ) {
             return (
                 <div className="list-group-item">
                     <Alert type="info"
-                           message={`Too many fulfillment locations found (${locations.length}).`}
+                           message={`${this.tt('too-many-locations-found')} (${locations.length}).`}
                            dismissible={false}/>
                 </div>
             )
@@ -207,14 +217,14 @@ export default class FulfillmentLocationsList extends React.Component {
         return (
             <div className="list-group-item">
                 <Alert type="info"
-                       message={`Too many fulfillment locations found (${locations.length}). Please continue typing to filter the results more.`}
+                       message={`${this.tt('too-many-locations-found')} (${locations.length}). ${this.tt('continue-typing-to-filter-more')}`}
                        dismissible={false}/>
-                Searching is possible by any of the following:
+                {this.tt('searching-possible-by')}
                 <ul style={this.style({paddingLeft: "inherit"})}>
-                    <li>Fulfiller Name</li>
-                    <li>Fulfiller Id</li>
-                    <li>Fulfillment Location Name</li>
-                    <li>Fulfillment Location Id</li>
+                    <li>{this.tt('fulfiller-name')}</li>
+                    <li>{this.tt('fulfiller-id')}</li>
+                    <li>{this.tt('location-name')}</li>
+                    <li>{this.tt('location-id')}</li>
                 </ul>
             </div>
         )
@@ -231,7 +241,7 @@ export default class FulfillmentLocationsList extends React.Component {
                     .filter(recent => recent.FulfillmentLocationId == location.FulfillmentLocationId).length <= 0);
         }
 
-        let filteredRecentLocations = this.props.recentFulfillmentLocations 
+        let filteredRecentLocations = this.props.recentFulfillmentLocations
             ? this.props.enableFiltering
                 ? this.props.recentFulfillmentLocations.filter(this.isLocationMatching.bind(this))
                 : this.props.recentFulfillmentLocations
@@ -242,7 +252,7 @@ export default class FulfillmentLocationsList extends React.Component {
                 {this.renderFiltering()}
                 {filteredLocations.length == 0 && filteredRecentLocations.length == 0
                     ? <Alert type={"warning"}
-                             message={"No matching locations. Please amend your search request."}
+                             message={this.tt("no-locations-found")}
                              dismissible={false}/>
                     : this.renderLocationsList(filteredLocations, filteredRecentLocations)}
             </div>
@@ -262,7 +272,7 @@ FulfillmentLocationsList.propTypes = {
     showCancelButton: PropTypes.bool,
     onCancelClicked: PropTypes.func,
     cancelButtonCaption: PropTypes.string,
-    
+
     // search
     maxItemsToShowAtOnce: PropTypes.number,
     enableSearchHighlighting: PropTypes.bool,
@@ -282,7 +292,14 @@ FulfillmentLocationsList.propTypes = {
     // additional columns
     additionalColumnTitle: PropTypes.string,
     additionalColumnRenderer: PropTypes.any,
-    customTitleRenderer: PropTypes.func
+    customTitleRenderer: PropTypes.func,
+
+    //
+    language: PropTypes.string,
+
+    // silence eslint
+    t: PropTypes.any,
+    i18n: PropTypes.any
 };
 
 FulfillmentLocationsList.defaultProps = {
@@ -300,6 +317,8 @@ FulfillmentLocationsList.defaultProps = {
     additionalColumnTitle: undefined,
     additionalColumnRenderer: undefined,
     showCancelButton: true,
-    cancelButtonCaption: "Cancel",
-    customTitleRenderer: undefined
+    customTitleRenderer: undefined,
+    language: 'eng'
 };
+
+export default translate('translations', {i18n: getI18nInstance()})(FulfillmentLocationsList);
