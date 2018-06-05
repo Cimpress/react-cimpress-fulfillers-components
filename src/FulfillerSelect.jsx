@@ -62,18 +62,18 @@ class FulfillerSelect extends React.Component {
 
         if ( this.props.includeName ) {
             if ( this.props.includeId && this.props.includeInternalId ) {
-                content = <span>{f.name} ({this.tt('id')}: {f.fulfillerId} / <span
+                content = <span>{f.name} ({f.fulfillerId} / <span
                     className={"text-muted"}>{f.internalFulfillerId}</span>)</span>;
             } else if ( this.props.includeId || this.props.includeInternalId ) {
-                content = <span>{f.name} ({this.tt('id')}: {f.fulfillerId || f.internalFulfillerId})</span>;
+                content = <span>{f.name} ({f.fulfillerId || f.internalFulfillerId})</span>;
             } else {
                 content = f.name;
             }
         } else {
             if ( this.props.includeId && this.props.includeInternalId ) {
-                content = <span>{this.tt('id')}: {f.fulfillerId} / <span className={"text-muted"}>{f.internalFulfillerId}</span></span>;
+                content = <span>{f.fulfillerId} / <span className={"text-muted"}>{f.internalFulfillerId}</span></span>;
             } else if ( this.props.includeId || this.props.includeInternalId ) {
-                content = <span>{this.tt('id')}: {f.fulfillerId || f.internalFulfillerId}</span>;
+                content = <span>{f.fulfillerId || f.internalFulfillerId}</span>;
             }
         }
 
@@ -166,7 +166,7 @@ FulfillerSelect.defaultProps = {
     language: 'eng',
     includeArchived: false,
     includeId: true,
-    includeInternalId: true,
+    includeInternalId: false,
     includeName: true
 };
 
