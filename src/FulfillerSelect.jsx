@@ -64,16 +64,20 @@ class FulfillerSelect extends React.Component {
             if ( this.props.includeId && this.props.includeInternalId ) {
                 content = <span>{f.name} ({f.fulfillerId} / <span
                     className={"text-muted"}>{f.internalFulfillerId}</span>)</span>;
-            } else if ( this.props.includeId || this.props.includeInternalId ) {
-                content = <span>{f.name} ({f.fulfillerId || f.internalFulfillerId})</span>;
+            } else if ( this.props.includeId ) {
+                content = <span>{f.name} ({f.fulfillerId})</span>;
+            } else if ( this.props.includeInternalId ) {
+                content = <span>{f.name} (<span className={"text-muted"}>{f.internalFulfillerId}</span>)</span>;
             } else {
                 content = f.name;
             }
         } else {
             if ( this.props.includeId && this.props.includeInternalId ) {
                 content = <span>{f.fulfillerId} / <span className={"text-muted"}>{f.internalFulfillerId}</span></span>;
-            } else if ( this.props.includeId || this.props.includeInternalId ) {
-                content = <span>{f.fulfillerId || f.internalFulfillerId}</span>;
+            } else if ( this.props.includeId ) {
+                content = <span>{f.fulfillerId}</span>;
+            } else if ( this.props.includeInternalId ) {
+                content = <span className={"text-muted"}>{f.internalFulfillerId}</span>;
             }
         }
 
