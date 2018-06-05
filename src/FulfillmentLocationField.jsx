@@ -92,7 +92,11 @@ FulfillmentLocationField.propTypes = {
     buttonCaption: PropTypes.string,
     showInternalIds: PropTypes.bool,
     showFulfiller: PropTypes.bool,
-    showFulfillmentLocation: PropTypes.bool
+    showFulfillmentLocation: PropTypes.bool,
+
+    // silence eslint
+    t: PropTypes.any,
+    i18n: PropTypes.any
 };
 
 FulfillmentLocationField.defaultProps = {

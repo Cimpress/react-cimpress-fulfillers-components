@@ -295,7 +295,11 @@ FulfillmentLocationsList.propTypes = {
     customTitleRenderer: PropTypes.func,
 
     //
-    language: PropTypes.string
+    language: PropTypes.string,
+
+    // silence eslint
+    t: PropTypes.any,
+    i18n: PropTypes.any
 };
 
 FulfillmentLocationsList.defaultProps = {

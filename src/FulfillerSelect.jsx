@@ -62,21 +62,18 @@ class FulfillerSelect extends React.Component {
 
         if ( this.props.includeName ) {
             if ( this.props.includeId && this.props.includeInternalId ) {
-                content = <span>{f.name} (Id: {f.fulfillerId} / <span
+                content = <span>{f.name} ({this.tt('id')}: {f.fulfillerId} / <span
                     className={"text-muted"}>{f.internalFulfillerId}</span>)</span>;
             } else if ( this.props.includeId || this.props.includeInternalId ) {
-                content = <span>{f.name} (Id: {f.fulfillerId || f.internalFulfillerId})</span>;
+                content = <span>{f.name} ({this.tt('id')}: {f.fulfillerId || f.internalFulfillerId})</span>;
             } else {
                 content = f.name;
             }
         } else {
             if ( this.props.includeId && this.props.includeInternalId ) {
-                content =
-                    <span>Id: {f.fulfillerId} / <span className={"text-muted"}>{f.internalFulfillerId}</span></span>;
-            }
-
-            else if ( this.props.includeId || this.props.includeInternalId ) {
-                content = <span>Id: {f.fulfillerId || f.internalFulfillerId}</span>;
+                content = <span>{this.tt('id')}: {f.fulfillerId} / <span className={"text-muted"}>{f.internalFulfillerId}</span></span>;
+            } else if ( this.props.includeId || this.props.includeInternalId ) {
+                content = <span>{this.tt('id')}: {f.fulfillerId || f.internalFulfillerId}</span>;
             }
         }
 
@@ -145,6 +142,10 @@ class FulfillerSelect extends React.Component {
 
 FulfillerSelect.propTypes = {
 
+    // silence eslint
+    t: PropTypes.any,
+    i18n: PropTypes.any,
+
     // Either access token OR a list of fulfillers to display
     accessToken: PropTypes.string,
     fulfillers: PropTypes.array,
@@ -154,6 +155,7 @@ FulfillerSelect.propTypes = {
 
     // display
     language: PropTypes.string,
+    label: PropTypes.string,
     includeArchived: PropTypes.bool,
     includeId: PropTypes.bool,
     includeInternalId: PropTypes.bool,

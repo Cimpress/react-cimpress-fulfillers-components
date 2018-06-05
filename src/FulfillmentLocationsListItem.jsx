@@ -144,6 +144,10 @@ FulfillmentLocationsListItem.propTypes = {
     customTitleRenderer: PropTypes.func,
     isRecent: PropTypes.bool,
     language: PropTypes.string,
+
+    // silence eslint
+    t: PropTypes.any,
+    i18n: PropTypes.any
 };
 
 FulfillmentLocationsListItem.defaultProps = {

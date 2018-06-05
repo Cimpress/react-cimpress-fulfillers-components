@@ -76,7 +76,11 @@ FulfillmentLocationTitle.propTypes = {
     location: PropTypes.object.isRequired,
     showInternalIds: PropTypes.bool,
     disableInlineStyles: PropTypes.bool,
-    language: PropTypes.string
+    language: PropTypes.string,
+
+    // silence eslint
+    t: PropTypes.any,
+    i18n: PropTypes.any
 };
 
 FulfillmentLocationTitle.defaultProps = {
