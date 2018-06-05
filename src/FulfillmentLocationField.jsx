@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default class FulfillmentLocationField extends React.Component {
+import {getI18nInstance} from './i18n';
+import {translate} from 'react-i18next';
+
+class FulfillmentLocationField extends React.Component {
 
     renderInternal(id) {
         if ( !this.props.showInternalIds ) {
@@ -19,7 +22,7 @@ export default class FulfillmentLocationField extends React.Component {
         }
 
         return (
-            <span>Fulfiller ID:&nbsp;<strong>{loc.FulfillerId}</strong>
+            <span>{this.tt('fulfiller-id')}:&nbsp;<strong>{loc.FulfillerId}</strong>
                 &nbsp;{this.renderInternal(loc.InternalFulfillerId)}</span>
         )
     }
@@ -30,10 +33,15 @@ export default class FulfillmentLocationField extends React.Component {
         }
 
         return (
-            <span>Location ID:&nbsp;<strong>{loc.FulfillmentLocationId}</strong>
+            <span>{this.tt('location-id')}:&nbsp;<strong>{loc.FulfillmentLocationId}</strong>
                 &nbsp;{this.renderInternal(loc.InternalFulfillmentLocationId)}
                 </span>
         )
+    }
+
+    tt(key) {
+        let {t, language} = this.props;
+        return t(key, {lng: language});
     }
 
     render() {
@@ -66,7 +74,9 @@ export default class FulfillmentLocationField extends React.Component {
                            readOnly={true} value={title}/>
                     <span className="input-group-btn">
                         <button type="button" className="btn btn-default" onClick={this.props.onClick}>
-                            <i className="fa fa-map-marker"></i>&nbsp;{this.props.buttonCaption}
+                            <i className="fa fa-map-marker"></i>&nbsp;{this.props.buttonCaption
+                            ? this.props.buttonCaption
+                            : this.tt('field-btn-caption')}
                         </button>
                     </span>
                 </span>
@@ -77,6 +87,7 @@ export default class FulfillmentLocationField extends React.Component {
 
 FulfillmentLocationField.propTypes = {
     onClick: PropTypes.func,
+    language: PropTypes.string,
     location: PropTypes.object.isRequired,
     buttonCaption: PropTypes.string,
     showInternalIds: PropTypes.bool,
@@ -85,8 +96,10 @@ FulfillmentLocationField.propTypes = {
 };
 
 FulfillmentLocationField.defaultProps = {
-    buttonCaption: 'Change...',
+    language: 'eng',
     showInternalIds: true,
     showFulfiller: true,
     showFulfillmentLocation: true
 };
+
+export default translate('translations', {i18n: getI18nInstance()})(FulfillmentLocationField);
