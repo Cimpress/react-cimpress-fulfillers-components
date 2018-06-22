@@ -10,7 +10,9 @@
   "scripts": {
     "code-check": "eslint --ext .js --ext .jsx src",
     "eslint-report": "eslint --ext .js --ext .jsx . -f node_modules/eslint-html-reporter/reporter.js -o eslint.report.html",
-    "build": "node node_modules/grunt-cli/bin/grunt webpack && babel src -d lib --copy-files"
+    "build": "node node_modules/grunt-cli/bin/grunt webpack && babel src -d lib --copy-files",
+    "storybook": "((kill -9 `cat mockserver.pid`; kill -9 `cat storybook.pid`) || true) && (node_modules/.bin/start-storybook -p 9001 -c .storybook & echo $! > storybook.pid) && (node_modules/.bin/mockserver -p 9102 -m ./mocks/ & echo $! > mockserver.pid)"
+
   },
   "main": "lib/index.js",
   "files": [
@@ -20,7 +22,7 @@
     "react": "^15.0.0 || ^16.0.0"
   },
   "dependencies": {
-    "@cimpress/react-components": "^3.3.4",
+    "@cimpress/react-components": "^4.0.0",
     "cimpress-fulfiller-identity": "^0.1.4",
     "cimpress-fulfillment-location": "^0.1.10",
     "i18next": "^11.3.2",
@@ -29,6 +31,7 @@
     "react-virtualized-select": "^3.1.3"
   },
   "devDependencies": {
+    "@storybook/react": "^3.4.8",
     "babel": "^6.23.0",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.26.0",
@@ -44,9 +47,10 @@
     "grunt-cli": "^1.2.0",
     "grunt-webpack": "^3.1.2",
     "load-grunt-tasks": "^3.5.2",
+    "mockserver": "^1.11.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "style-loader": "^0.21.0",
-    "webpack": "^4.11.0"
+    "webpack": "^3.0.0"
   }
 }
