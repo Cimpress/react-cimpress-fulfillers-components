@@ -132,11 +132,11 @@ class FulfillerSelect extends React.Component {
             .map((f, index) => Object.assign({}, f, { value: `recent${index}` })); // do not highlight or show in search results
 
         let recentFulfillersOptionGroupLabelOption = {
-            text: "Recently selected fulfillers",
+            text: this.tt('recent-fulfillers'),
             optionRenderer: this.fulfillerOptionGroupLabelOptionRenderer
         };
         let fulfillersOptionGroupLabelOption = {
-            text: "All fulfillers",
+            text: this.tt('all-fulfillers'),
             optionRenderer: this.fulfillerOptionGroupLabelOptionRenderer
         };
 
