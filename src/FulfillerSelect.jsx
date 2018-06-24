@@ -26,7 +26,7 @@ class FulfillerSelect extends React.Component {
             fetchingFulfillers: true
         };
 
-        this.customizrClient = new CustomizrClient(global.CUSTOMIZR_URL || null, "https://trdlnk.cimpress.io");
+        this.customizrClient = new CustomizrClient(global.CUSTOMIZR_URL || null, 'https://trdlnk.cimpress.io');
 
         this.onChange = this.onChange.bind(this);
         this.fulfillerOptionGroupLabelOptionRenderer = this.fulfillerOptionGroupLabelOptionRenderer.bind(this);
@@ -57,11 +57,11 @@ class FulfillerSelect extends React.Component {
             });
     }
 
-    componentWillReceiveProps(newProps) {
-        if (this.props.accessToken !== newProps.accessToken) {
-            this.fetchFulfillers(newProps.accessToken);
-        } else if (newProps.accessToken && this.props.includeArchived !== newProps.includeArchived) {
-            this.fetchFulfillers(newProps.accessToken, newProps.includeArchived);
+    componentDidUpdate(prevProps) {
+        if (prevProps.accessToken !== this.props.accessToken) {
+            this.fetchFulfillers(this.props.accessToken);
+        } else if (this.accessToken && prevProps.includeArchived !== this.includeArchived) {
+            this.fetchFulfillers(this.props.accessToken, this.props.includeArchived);
         }
     }
 
@@ -155,13 +155,13 @@ class FulfillerSelect extends React.Component {
     fulfillerSpinnerOptionRenderer({ option, key, style }) {
         return (
             <div
-                className="VirtualizedSelectOption VirtualizedSelectDisabledOption"
+                className='VirtualizedSelectOption VirtualizedSelectDisabledOption'
                 style={style}
                 key={key}>
-                <span className="FulfillerSelect-vertical-center">
-                    <Spinner className="FulfillerSelect-Spinner-20" size={20}/>
-                    <span className="FulfillerSelect-Spinner-text">
-                        {options.option.text}
+                <span className='FulfillerSelect-vertical-center'>
+                    <Spinner className='FulfillerSelect-Spinner-20' size={20}/>
+                    <span className='FulfillerSelect-Spinner-text'>
+                        {option.text}
                     </span>
                 </span>
             </div>
@@ -171,11 +171,11 @@ class FulfillerSelect extends React.Component {
     fulfillerWarningMessageOptionRenderer({ option, key, style }) {
         return (
             <div
-                className="VirtualizedSelectOption VirtualizedSelectDisabledOption"
+                className='VirtualizedSelectOption VirtualizedSelectDisabledOption'
                 style={style}
                 key={key}>
                 <span>
-                    {options.option.text}
+                    {option.text}
                 </span>
             </div>
         );
@@ -184,7 +184,7 @@ class FulfillerSelect extends React.Component {
     fulfillerOptionGroupLabelOptionRenderer({ option, key, style }) {
         return (
             <div
-                className="VirtualizedSelectOption FulfillerSelect-option-group-label"
+                className='VirtualizedSelectOption FulfillerSelect-option-group-label'
                 style={style}
                 key={key}>
             <strong>{option.text}</strong>
@@ -193,11 +193,11 @@ class FulfillerSelect extends React.Component {
     }
 
     fulfillerSingleOptionRenderer ({ focusedOption, focusOption, key, option, selectValue, style, valueArray }) {
-        let className = ["VirtualizedSelectOption"];
+        let className = ['VirtualizedSelectOption'];
         let content = this.formatTitle(option) || this.tt('misconfigured');
 
         if (option.archived) {
-            className.push("VirtualizedSelectDisabledOption");
+            className.push('VirtualizedSelectDisabledOption');
         }
 
         if (option.fulfillerId === focusedOption.fulfillerId) {
@@ -235,21 +235,21 @@ class FulfillerSelect extends React.Component {
         if (this.props.includeName) {
             if (this.props.includeId && this.props.includeInternalId) {
                 content = <span>{fulfiller.name} ({fulfiller.fulfillerId} / <span
-                    className={"text-muted"}>{fulfiller.internalFulfillerId}</span>)</span>;
+                    className={'text-muted'}>{fulfiller.internalFulfillerId}</span>)</span>;
             } else if (this.props.includeId) {
                 content = <span>{fulfiller.name} ({fulfiller.fulfillerId})</span>;
             } else if (this.props.includeInternalId) {
-                content = <span>{fulfiller.name} (<span className={"text-muted"}>{fulfiller.internalFulfillerId}</span>)</span>;
+                content = <span>{fulfiller.name} (<span className={'text-muted'}>{fulfiller.internalFulfillerId}</span>)</span>;
             } else {
                 content = fulfiller.name;
             }
         } else {
             if (this.props.includeId && this.props.includeInternalId) {
-                content = <span>{fulfiller.fulfillerId} / <span className={"text-muted"}>{fulfiller.internalFulfillerId}</span></span>;
+                content = <span>{fulfiller.fulfillerId} / <span className={'text-muted'}>{fulfiller.internalFulfillerId}</span></span>;
             } else if (this.props.includeId) {
                 content = <span>{fulfiller.fulfillerId}</span>;
             } else if (this.props.includeInternalId) {
-                content = <span className={"text-muted"}>{fulfiller.internalFulfillerId}</span>;
+                content = <span className={'text-muted'}>{fulfiller.internalFulfillerId}</span>;
             }
         }
 
@@ -263,7 +263,7 @@ class FulfillerSelect extends React.Component {
 
     render() {
         return (
-            <div className="filfiller-select-wrapper">
+            <div>
                 <SelectWrapper
                     selectedSelect={VirtualizedSelect}
                     label={this.props.label || this.tt('label')}

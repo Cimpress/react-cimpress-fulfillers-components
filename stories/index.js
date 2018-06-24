@@ -6,9 +6,9 @@ import { CssLoader } from '@cimpress/react-components'
 
 import fulfillers from './fulfillers'
 
-global.CUSTOMIZR_URL = "http://localhost:9102";
-global.FULFILLER_IDENTITY_URL = "http://localhost:9102";
-global.FULFILLMENT_LOCATION_URL = "http://localhost:9102";
+global.CUSTOMIZR_URL = 'http://localhost:9102';
+global.FULFILLER_IDENTITY_URL = 'http://localhost:9102';
+global.FULFILLMENT_LOCATION_URL = 'http://localhost:9102';
 
 let wrapInLoader = component => {
   return (

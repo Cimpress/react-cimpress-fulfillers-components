@@ -1,7 +1,7 @@
 const { pope } = require('pope');
 const axios = require('axios');
 
-const DEFAULT_BASE_URL = "https://customizr.at.cipress.io";
+const DEFAULT_BASE_URL = 'https://customizr.at.cipress.io';
 const API = {
   v1Settings: '/v1/resources/{{resource}}/settings'
 };
@@ -27,7 +27,7 @@ class CustomizrClient {
         Authorization: token
       });
     }
-  };
+  }
 
   async getSettings(token) {
     let url = this.buildUrl(API.v1Settings);
