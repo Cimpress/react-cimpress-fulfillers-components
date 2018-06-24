@@ -35,8 +35,6 @@ class CustomizrClient {
 
     CustomizrClient.addAuth(url, options, token);
 
-    console.log(url, options, this.resource);
-
     let response =  await axios.get(url, options);
     return response.data;
   }
