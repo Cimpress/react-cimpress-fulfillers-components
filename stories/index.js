@@ -4,6 +4,8 @@ import { action } from '@storybook/addon-actions';
 import FulfillerSelect from '../src/FulfillerSelect'
 import { CssLoader } from '@cimpress/react-components'
 
+import fulfillers from './fulfillers'
+
 global.CUSTOMIZR_URL = "http://localhost:9102";
 
 let wrapInLoader = component => {
@@ -18,37 +20,6 @@ let newComp = props => {
   return (<h1>this.props.text</h1>);
 }
 
-let fulfillers = [
-  {
-    name: "My Test Fulfiller",
-    internalFulfillerId: 31337,
-    fulfillerId: "deadbeef",
-    archived: false
-  },
-  {
-    name: "My Test Fulfiller 2",
-    internalFulfillerId: 31338,
-    fulfillerId: "deadbef0",
-    archived: false
-  },
-  {
-    name: "My Test Fulfiller 3",
-    internalFulfillerId: 31339,
-    fulfillerId: "deadbef1",
-    archived: false
-  }
-];
-
-fulfillers = fulfillers.concat(fulfillers);
-fulfillers = fulfillers.concat(fulfillers);
-fulfillers = fulfillers.concat(fulfillers);
-fulfillers = fulfillers.concat(fulfillers);
-fulfillers = fulfillers.concat(fulfillers);
-fulfillers = fulfillers.concat(fulfillers);
-fulfillers = fulfillers.concat(fulfillers);
-fulfillers = fulfillers.concat(fulfillers);
-
-
 storiesOf('Fulfiller Selection', module)
   .add('with everything included', () => wrapInLoader(
     <FulfillerSelect
@@ -57,8 +28,57 @@ storiesOf('Fulfiller Selection', module)
       fulfillers={fulfillers}
       onChange={v => {}}
       includeArchived={true}
-      includeId={true}
       includeInternalId={true}
+      includeId={true}
       includeName={true}
     />
-  ));
+  ))
+  .add('with name, and both IDs included', () => wrapInLoader(
+    <FulfillerSelect
+      accessToken='Bearer bear'
+      language={'eng'}
+      fulfillers={fulfillers}
+      onChange={v => {}}
+      includeArchived={false}
+      includeInternalId={true}
+      includeId={true}
+      includeName={true}
+    />
+  ))
+  .add('with name and ID included', () => wrapInLoader(
+    <FulfillerSelect
+      accessToken='Bearer bear'
+      language={'eng'}
+      fulfillers={fulfillers}
+      onChange={v => {}}
+      includeArchived={false}
+      includeInternalId={false}
+      includeId={true}
+      includeName={true}
+    />
+  ))
+  .add('with name included', () => wrapInLoader(
+    <FulfillerSelect
+      accessToken='Bearer bear'
+      language={'eng'}
+      fulfillers={fulfillers}
+      onChange={v => {}}
+      includeArchived={false}
+      includeInternalId={false}
+      includeId={false}
+      includeName={true}
+    />
+  ))
+  .add('with nothing included', () => wrapInLoader(
+    <FulfillerSelect
+      accessToken='Bearer bear'
+      language={'eng'}
+      fulfillers={fulfillers}
+      onChange={v => {}}
+      includeArchived={false}
+      includeInternalId={false}
+      includeId={false}
+      includeName={false}
+    />
+  ))
+;

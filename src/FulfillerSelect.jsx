@@ -108,24 +108,28 @@ class FulfillerSelect extends React.Component {
 
         if (!fulfillers) {
             if (this.state.fetchingFulfillers) {
-                return [
-                    {
-                        text: this.tt('loading'),
-                        optionRenderer: this.fulfillerSpinnerOptionRenderer
-                    }
-                ];
+                return [{
+                    text: this.tt('loading'),
+                    optionRenderer: this.fulfillerSpinnerOptionRenderer
+                }];
             }
 
-            return [
-                {
-                    text: this.tt('no-data'),
-                    optionRenderer: this.fulfillerWarningMessageOptionRenderer
-                }
-            ];
+            return [{
+                text: this.tt('no-data'),
+                optionRenderer: this.fulfillerWarningMessageOptionRenderer
+            }];
         }
 
-        let fulfillerOptions = fulfillers.map(f => Object.assign({}, f, { optionRenderer: this.fulfillerSingleOptionRenderer }));
-        let recentFulfillerOptions = this.state.recentFulfillerIds.map(id => fulfillerOptions.find(f => f.fulfillerId === id));
+        let fulfillerOptions = fulfillers.map(f => Object.assign({}, f, {
+            optionRenderer: this.fulfillerSingleOptionRenderer,
+            value: `${f.fulfillerId} ${f.name}` // 'value' required for search and focus style change functionality
+        }));
+
+        let recentFulfillerOptions = this.state.recentFulfillerIds
+            .slice(0, 5)
+            .map(id => fulfillerOptions.find(f => f.fulfillerId === id))
+            .filter(f => f && !f.archived)
+            .map((f, index) => Object.assign({}, f, { value: `recent${index}` })); // do not highlight or show in search results
 
         let recentFulfillersOptionGroupLabelOption = {
             text: "Recently selected fulfillers",
@@ -188,7 +192,7 @@ class FulfillerSelect extends React.Component {
         );
     }
 
-    fulfillerSingleOptionRenderer ({ focusedOption, focusOption, key, labelKey, option, selectValue, style, valueArray }) {
+    fulfillerSingleOptionRenderer ({ focusedOption, focusOption, key, option, selectValue, style, valueArray }) {
         let className = ["VirtualizedSelectOption"];
         let content = this.formatTitle(option) || this.tt('misconfigured');
 
