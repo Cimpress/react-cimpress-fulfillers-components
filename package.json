@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "@storybook/react": "^3.4.8",
+    "aws-sdk": "^2.263.1",
     "babel": "^6.23.0",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.26.0",
