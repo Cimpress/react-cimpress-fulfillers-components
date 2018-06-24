@@ -4,6 +4,8 @@ import { action } from '@storybook/addon-actions';
 import FulfillerSelect from '../src/FulfillerSelect'
 import { CssLoader } from '@cimpress/react-components'
 
+global.CUSTOMIZR_URL = "http://localhost:9102";
+
 let wrapInLoader = component => {
   return (
     <CssLoader>
@@ -40,6 +42,7 @@ let fulfillers = [
 storiesOf('Fulfiller Selection', module)
   .add('with everything included', () => wrapInLoader(
     <FulfillerSelect
+      accessToken='Bearer bear'
       language={'eng'}
       fulfillers={fulfillers}
       onChange={v => {}}

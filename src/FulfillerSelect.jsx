@@ -5,6 +5,8 @@ import SelectWrapper from '@cimpress/react-components/lib/SelectWrapper';
 import {shapes} from '@cimpress/react-components';
 import {getFulfillers} from './apis/fi.api';
 
+import CustomizrClient from './apis/customizr.api';
+
 import {getI18nInstance} from './i18n';
 import {translate} from 'react-i18next';
 
@@ -18,8 +20,13 @@ class FulfillerSelect extends React.Component {
 
         this.state = {
             fulfillers: undefined,
-            selectedFulfillerId: undefined
+            selectedFulfillerId: undefined,
+            recentFulfillerIds: []
         };
+
+        this.onChange = this.onChange.bind(this);
+        this.customizrClient = new CustomizrClient(global.CUSTOMIZR_URL || null, "https://trdlnk.cimpress.io");
+
     }
 
     fetchFulfillers(accessToken, includeArchived) {
@@ -52,9 +59,41 @@ class FulfillerSelect extends React.Component {
     }
 
     componentDidMount() {
-        if ( this.props.accessToken && !this.props.fulfillers ) {
+        if (!this.props.accessToken) {
+            return;
+        }
+
+        if (!this.props.fulfillers) {
             this.fetchFulfillers(this.props.accessToken);
         }
+
+        this.getRecentFulfillerIds();
+    }
+
+    onChange(e) {
+        this.setState({
+            selectedFulfillerId: e.value
+        });
+
+        if ( this.props.onChange ) {
+            this.props.onChange({value: this.fulfillerMap[e.value]});
+        }
+
+        this.updateRecentFulfillerIds(this.fulfillerMap[e.value].fulfillerId);
+    }
+
+    async getRecentFulfillerIds() {
+        let settings = await this.customizrClient.getSettings(this.props.accessToken);
+        let recentFulfillerIds = settings.recentFulfillerIds;
+        this.setState({ recentFulfillerIds });
+        return recentFulfillerIds;
+    }
+
+    async updateRecentFulfillerIds(fulfillerId) {
+        let recentFulfillerIds = await this.getRecentFulfillerIds();
+        let update = { recentFulfillerIds: [fulfillerId].concat(recentFulfillerIds.filter(id => id !== fulfillerId)) };
+        this.setState(update);
+        this.customizrClient.putSettings(this.props.accessToken, update);
     }
 
     getTitle(f) {
@@ -87,7 +126,6 @@ class FulfillerSelect extends React.Component {
     }
 
     getOptions(fulfillers) {
-
         if ( !fulfillers ) {
             if ( this.state.fetchingFulfillers ) {
                 return [{
@@ -118,7 +156,6 @@ class FulfillerSelect extends React.Component {
     }
 
     render() {
-
         let fulfillers = this.state.fulfillers || this.props.fulfillers;
 
         return (
@@ -130,14 +167,7 @@ class FulfillerSelect extends React.Component {
                     options={this.getOptions(fulfillers)}
                     noResultsText={this.tt('no-results-found')}
                     clearable={false}
-                    onChange={(v) => {
-                        this.setState({
-                            selectedFulfillerId: v.value
-                        });
-                        if ( this.props.onChange ) {
-                            this.props.onChange({value: this.fulfillerMap[v.value]});
-                        }
-                    }}
+                    onChange={this.onChange}
                     tether/>
             </div>
         )
@@ -145,7 +175,6 @@ class FulfillerSelect extends React.Component {
 }
 
 FulfillerSelect.propTypes = {
-
     // silence eslint
     t: PropTypes.any,
     i18n: PropTypes.any,
