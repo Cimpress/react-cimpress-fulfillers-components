@@ -6,7 +6,7 @@ import {shapes} from '@cimpress/react-components';
 import {getFulfillers} from './apis/fi.api';
 import CustomizrClient from './apis/customizr.api';
 
-import '../styles/index.css'
+import '../styles/FulfillerSelect.css'
 
 import {getI18nInstance} from './i18n';
 import {translate} from 'react-i18next';
@@ -36,12 +36,12 @@ class FulfillerSelect extends React.Component {
         this.fulfillerSpinnerOptionRenderer = this.fulfillerSpinnerOptionRenderer.bind(this);
     }
 
-    fetchFulfillers(accessToken, includeArchived) {
+    fetchFulfillers(accessToken) {
         this.setState({
             fetchingFulfillers: true
         });
 
-        getFulfillers(accessToken, {archived: !!includeArchived})
+        getFulfillers(accessToken)
             .then(fulfillers => {
                 fulfillers.forEach(f => this.fulfillerMap[f.fulfillerId] = f);
                 this.setState({
@@ -60,8 +60,6 @@ class FulfillerSelect extends React.Component {
     componentDidUpdate(prevProps) {
         if (prevProps.accessToken !== this.props.accessToken) {
             this.fetchFulfillers(this.props.accessToken);
-        } else if (this.accessToken && prevProps.includeArchived !== this.includeArchived) {
-            this.fetchFulfillers(this.props.accessToken, this.props.includeArchived);
         }
     }
 
@@ -120,7 +118,9 @@ class FulfillerSelect extends React.Component {
             }];
         }
 
-        let fulfillerOptions = fulfillers.map(f => Object.assign({}, f, {
+        let fulfillerOptions = fulfillers
+        .filter(f => this.props.includeArchived || !f.archived)
+        .map(f => Object.assign({}, f, {
             optionRenderer: this.fulfillerSingleOptionRenderer,
             value: `${f.fulfillerId} ${f.name}` // 'value' required for search and focus style change functionality
         }));
@@ -128,7 +128,7 @@ class FulfillerSelect extends React.Component {
         let recentFulfillerOptions = this.state.recentFulfillerIds
             .slice(0, 5)
             .map(id => fulfillerOptions.find(f => f.fulfillerId === id))
-            .filter(f => f && !f.archived)
+            .filter(f => f)
             .map((f, index) => Object.assign({}, f, { value: `recent${index}` })); // do not highlight or show in search results
 
         let recentFulfillersOptionGroupLabelOption = {
