@@ -29,7 +29,7 @@ module.exports = function (grunt) {
         resolve: {
           extensions: ['.js', '.jsx']
         },
-        entry: ['regenerator-runtime/runtime', './src'],
+        entry: ['./src'],
         module: {
           rules: [
             {
