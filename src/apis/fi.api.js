@@ -1,13 +1,9 @@
 const FulfillerIdentity = require('cimpress-fulfiller-identity');
 
-let fulfillerIdentity = null;
-let latestToken = null;
-
 function getFulfillers(token, options) {
-
-    if ( token !== latestToken ) {
-        fulfillerIdentity = new FulfillerIdentity('Bearer ' + token);
-    }
+    let fulfillerIdentity = new FulfillerIdentity('Bearer ' + token, {
+        url: global.FULFILLER_IDENTITY_URL
+    });
 
     return fulfillerIdentity.getFulfillers(options)
 }

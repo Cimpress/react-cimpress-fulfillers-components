@@ -1,0 +1,20 @@
+.FulfillerSelect-Spinner-20 {
+    height: 20px;
+}
+
+.FulfillerSelect-Spinner-text {
+    margin-left: 0.5em;
+}
+
+.FulfillerSelect-vertical-center {
+    display: inline-flex;
+    align-items: center;
+}
+
+div.FulfillerSelect-option-group-label {
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #c4cdd6;
+    display: block;
+    padding-top: 12px;
+}
