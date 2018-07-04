@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import FulfillerSelect from '../src/FulfillerSelect'
+import { FulfillerSelect } from '../src/index'
 import { CssLoader } from '@cimpress/react-components'
 
 import fulfillers from './fulfillers'
