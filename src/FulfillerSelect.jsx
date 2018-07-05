@@ -72,29 +72,38 @@ class FulfillerSelect extends React.Component {
             this.fetchFulfillers(this.props.accessToken);
         }
 
-        this.getRecentFulfillerIds();
+        this.getRecentFulfillerIds()
+            .then(() => {
+                if (this.state.recentFulfillerIds.length && !this.state.selectedFulfillerId) {
+                    this.setState({ selectedFulfillerId: this.state.recentFulfillerIds[0] });
+                }
+            });
     }
 
     onChange(e) {
         this.setState({
-            selectedFulfillerId: e.fulfillerId
+            selectedFulfillerId: e.fulfiller.fulfillerId
         });
 
         if (this.props.onChange) {
-            this.props.onChange({value: this.fulfillerMap[e.fulfillerId]});
+            this.props.onChange({ value: this.fulfillerMap[e.fulfiller.fulfillerId] });
         }
 
-        this.updateRecentFulfillerIds(e.fulfillerId);
+        this.updateRecentFulfillerIds(e.fulfiller.fulfillerId);
     }
 
     async getRecentFulfillerIds() {
         let settings = await this.customizrClient.getSettings(this.props.accessToken);
-        let recentFulfillerIds = settings.recentFulfillerIds;
+        let recentFulfillerIds = settings.recentFulfillerIds || [];
         this.setState({ recentFulfillerIds });
         return recentFulfillerIds;
     }
 
     async updateRecentFulfillerIds(fulfillerId) {
+        // initial, strictly visual client-side update to circumvent a wait on GET Customizr
+        this.setState({ recentFulfillerIds: [fulfillerId].concat(this.state.recentFulfillerIds.filter(id => id !== fulfillerId)) });
+
+        // consistent server-side update
         let recentFulfillerIds = await this.getRecentFulfillerIds();
         let update = { recentFulfillerIds: [fulfillerId].concat(recentFulfillerIds.filter(id => id !== fulfillerId)) };
         this.setState(update);
@@ -119,15 +128,16 @@ class FulfillerSelect extends React.Component {
         }
 
         let fulfillerOptions = fulfillers
-        .filter(f => this.props.includeArchived || !f.archived)
-        .map(f => Object.assign({}, f, {
-            optionRenderer: this.fulfillerSingleOptionRenderer,
-            value: `${f.fulfillerId} ${f.name}` // 'value' required for search and focus style change functionality
-        }));
+            .filter(f => this.props.includeArchived || !f.archived)
+            .map(f => ({
+                value: `${f.fulfillerId} ${f.name}`, // 'value' required for search and focus style change functionality
+                optionRenderer: this.fulfillerSingleOptionRenderer,
+                fulfiller: f
+            }))
 
         let recentFulfillerOptions = this.state.recentFulfillerIds
             .slice(0, 5)
-            .map(id => fulfillerOptions.find(f => f.fulfillerId === id))
+            .map(id => fulfillerOptions.find(f => f.fulfiller.fulfillerId === id))
             .filter(f => f)
             .map((f, index) => Object.assign({}, f, { value: `recent${index}` })); // do not highlight or show in search results
 
@@ -135,17 +145,25 @@ class FulfillerSelect extends React.Component {
             text: this.tt('recent-fulfillers'),
             optionRenderer: this.fulfillerOptionGroupLabelOptionRenderer
         };
+
         let fulfillersOptionGroupLabelOption = {
             text: this.tt('all-fulfillers'),
             optionRenderer: this.fulfillerOptionGroupLabelOptionRenderer
         };
 
-        return [
-            recentFulfillersOptionGroupLabelOption,
-            ...recentFulfillerOptions,
+        let allOptions = [
             fulfillersOptionGroupLabelOption,
             ...fulfillerOptions
         ];
+
+        if (recentFulfillerOptions.length) {
+            allOptions = [
+                recentFulfillersOptionGroupLabelOption,
+                ...recentFulfillerOptions
+            ].concat(allOptions);
+        }
+
+        return allOptions;
     }
 
     variableOptionRenderer(options) {
@@ -155,15 +173,15 @@ class FulfillerSelect extends React.Component {
     fulfillerSpinnerOptionRenderer({ option, key, style }) {
         return (
             <div
-                className='VirtualizedSelectOption VirtualizedSelectDisabledOption'
-                style={style}
-                key={key}>
-                <span className='FulfillerSelect-vertical-center'>
-                    <Spinner className='FulfillerSelect-Spinner-20' size={20}/>
-                    <span className='FulfillerSelect-Spinner-text'>
-                        {option.text}
-                    </span>
-                </span>
+            className='VirtualizedSelectOption VirtualizedSelectDisabledOption'
+            style={style}
+            key={key}>
+            <span className='FulfillerSelect-vertical-center'>
+            <Spinner className='FulfillerSelect-Spinner-20' size={20}/>
+            <span className='FulfillerSelect-Spinner-text'>
+            {option.text}
+            </span>
+            </span>
             </div>
         );
     }
@@ -171,12 +189,12 @@ class FulfillerSelect extends React.Component {
     fulfillerWarningMessageOptionRenderer({ option, key, style }) {
         return (
             <div
-                className='VirtualizedSelectOption VirtualizedSelectDisabledOption'
-                style={style}
-                key={key}>
-                <span>
-                    {option.text}
-                </span>
+            className='VirtualizedSelectOption VirtualizedSelectDisabledOption'
+            style={style}
+            key={key}>
+            <span>
+            {option.text}
+            </span>
             </div>
         );
     }
@@ -184,49 +202,51 @@ class FulfillerSelect extends React.Component {
     fulfillerOptionGroupLabelOptionRenderer({ option, key, style }) {
         return (
             <div
-                className='VirtualizedSelectOption FulfillerSelect-option-group-label'
-                style={style}
-                key={key}>
+            className='VirtualizedSelectOption FulfillerSelect-option-group-label'
+            style={style}
+            key={key}>
             <strong>{option.text}</strong>
-        </div>
+            </div>
         );
     }
 
     fulfillerSingleOptionRenderer ({ focusedOption, focusOption, key, option, selectValue, style, valueArray }) {
         let className = ['VirtualizedSelectOption'];
-        let content = this.formatTitle(option) || this.tt('misconfigured');
+        let content = this.formatTitle(option.fulfiller) || this.tt('misconfigured');
 
-        if (option.archived) {
+        if (option.fulfiller.archived) {
             className.push('VirtualizedSelectDisabledOption');
         }
 
-        if (option.fulfillerId === focusedOption.fulfillerId) {
-          className.push('VirtualizedSelectFocusedOption')
+        if (focusedOption && focusedOption.fulfiller && option.fulfiller.fulfillerId === focusedOption.fulfiller.fulfillerId) {
+            className.push('VirtualizedSelectFocusedOption')
         }
 
-        if (valueArray && valueArray.find(value => value.fulfillerId === option.fulfillerId)) {
-          className.push('VirtualizedSelectSelectedOption')
+        if (valueArray && valueArray.find(value => value.fulfillerId === option.fulfiller.fulfillerId)) {
+            className.push('VirtualizedSelectSelectedOption')
         }
 
         const events = { 
-            onClick: () => selectValue(option),
+            onClick: () => {
+                return selectValue(option);
+            },
             onMouseEnter: () => focusOption(option)
         };
 
         return (
-          <div
+            <div
             className={className.join(' ')}
             key={key}
-            title={option.fulfillerId}
+            title={option.fulfiller.fulfillerId}
             style={style}
             {...events}>
             {content}
-          </div>
+            </div>
         )
     }
 
-    fulfillerValueRenderer (option) {
-        return this.formatTitle(option) || this.tt('misconfigured');
+    fulfillerValueRenderer (fulfiller) {
+        return this.formatTitle(fulfiller) || this.tt('misconfigured');
     }
 
     formatTitle(fulfiller) {
@@ -264,17 +284,17 @@ class FulfillerSelect extends React.Component {
     render() {
         return (
             <div>
-                <SelectWrapper
-                    selectedSelect={VirtualizedSelect}
-                    label={this.props.label || this.tt('label')}
-                    value={this.fulfillerMap[this.state.selectedFulfillerId]}
-                    options={this.getOptions()}
-                    noResultsText={this.tt('no-results-found')}
-                    clearable={false}
-                    onChange={this.onChange}
-                    optionRenderer={this.variableOptionRenderer}
-                    valueRenderer={this.fulfillerValueRenderer}
-                    tether/>
+            <SelectWrapper
+            selectedSelect={VirtualizedSelect}
+            label={this.props.label || this.tt('label')}
+            value={this.fulfillerMap[this.state.selectedFulfillerId]}
+            options={this.getOptions()}
+            noResultsText={this.tt('no-results-found')}
+            clearable={false}
+            onChange={this.onChange}
+            optionRenderer={this.variableOptionRenderer}
+            valueRenderer={this.fulfillerValueRenderer}
+            tether/>
             </div>
         )
     }
