@@ -38,8 +38,11 @@
         "space-infix-ops": ["warn", {"int32Hint": true}],
         "newline-per-chained-call": ["warn"],
         "keyword-spacing": ["warn", { overrides: {} }],
-        "object-curly-spacing": ["off", "always"],
-        "array-bracket-spacing": ["off", "always"],
+        "object-curly-spacing": ["warn", "always", {
+            "arraysInObjects": false,
+            "objectsInObjects": false
+        }],
+        "array-bracket-spacing": ["warn", "never"],
         "no-undef": ["error"],
         "brace-style": ["error", "1tbs"],
         // React specific

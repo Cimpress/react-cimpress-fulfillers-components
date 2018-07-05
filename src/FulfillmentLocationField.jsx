@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getI18nInstance} from './i18n';
-import {translate} from 'react-i18next';
+import { getI18nInstance } from './i18n';
+import { translate } from 'react-i18next';
 
 class FulfillmentLocationField extends React.Component {
 
@@ -40,8 +40,8 @@ class FulfillmentLocationField extends React.Component {
     }
 
     tt(key) {
-        let {t, language} = this.props;
-        return t(key, {lng: language});
+        let { t, language } = this.props;
+        return t(key, { lng: language });
     }
 
     render() {
@@ -61,8 +61,8 @@ class FulfillmentLocationField extends React.Component {
 
         return (
             <div className="form-group form-group-active cimpress-fl-item">
-                <span className="input-group" style={{cursor: "pointer"}}>
-                    <label className="control-label" htmlFor="disabledInput" style={{cursor: "pointer"}}>
+                <span className="input-group" style={{ cursor: "pointer" }}>
+                    <label className="control-label" htmlFor="disabledInput" style={{ cursor: "pointer" }}>
                         {this.renderFulfillerId(loc)}
                         {this.props.showFulfiller && this.props.showFulfillmentLocation
                             ? <span>&nbsp;&bull;&nbsp;</span>
@@ -70,7 +70,7 @@ class FulfillmentLocationField extends React.Component {
                         {this.renderFulfillmentLocationId(loc)}
                     </label>
                     <input onClick={this.props.onClick} className="form-control" id="disabledInput" type="text"
-                           style={{cursor: "pointer"}}
+                           style={{ cursor: "pointer" }}
                            readOnly={true} value={title}/>
                     <span className="input-group-btn">
                         <button type="button" className="btn btn-default" onClick={this.props.onClick}>
@@ -106,4 +106,4 @@ FulfillmentLocationField.defaultProps = {
     showFulfillmentLocation: true
 };
 
-export default translate('translations', {i18n: getI18nInstance()})(FulfillmentLocationField);
+export default translate('translations', { i18n: getI18nInstance() })(FulfillmentLocationField);

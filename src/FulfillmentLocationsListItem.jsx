@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import Highlighter from 'react-highlight-words';
 import Tooltip from '@cimpress/react-components/lib/Tooltip';
 
-import {getI18nInstance} from './i18n';
-import {translate} from 'react-i18next';
+import { getI18nInstance } from './i18n';
+import { translate } from 'react-i18next';
 
 class FulfillmentLocationsListItem extends React.Component {
 
@@ -26,7 +26,7 @@ class FulfillmentLocationsListItem extends React.Component {
         return (
             <Highlighter
                 highlightClassName={"highlight"}
-                highlightStyle={this.style({backgroundColor: "yellow", padding: "0px", color: "black"})}
+                highlightStyle={this.style({ backgroundColor: "yellow", padding: "0px", color: "black" })}
                 searchWords={[this.props.highlight]}
                 textToHighlight={target + ''}
             />
@@ -54,7 +54,7 @@ class FulfillmentLocationsListItem extends React.Component {
 
         if (!this.props.onClick) {
             return (
-                <h5 style={this.style({verticalAlign: "middle"})}>
+                <h5 style={this.style({ verticalAlign: "middle" })}>
                     {this.props.isRecent 
                         ? <Tooltip contents={this.tt("recent-location")} direction={"top"}><i className="fa fa-clock-o"></i></Tooltip>
                         : <i className="fa fa-map-marker"></i>}
@@ -69,7 +69,7 @@ class FulfillmentLocationsListItem extends React.Component {
 
         return (
             <h5 onClick={this.onSelected.bind(this)}
-                style={this.style({cursor: "pointer", verticalAlign: "middle"})}>
+                style={this.style({ cursor: "pointer", verticalAlign: "middle" })}>
                 {this.props.isRecent 
                     ? <Tooltip contents={this.tt("recent-location")} direction={"top"}><i className="fa fa-clock-o"></i></Tooltip>
                     : <i className="fa fa-map-marker"></i>}
@@ -85,8 +85,8 @@ class FulfillmentLocationsListItem extends React.Component {
     }
 
     tt(key) {
-        let {t, language} = this.props;
-        return t(key, {lng: language});
+        let { t, language } = this.props;
+        return t(key, { lng: language });
     }
 
     render() {
@@ -102,7 +102,7 @@ class FulfillmentLocationsListItem extends React.Component {
                 </td>
                 {this.props.showFulfillmentLocationId
                     ? (
-                        <td style={this.style({color: "#333943", verticalAlign: "middle"})}>
+                        <td style={this.style({ color: "#333943", verticalAlign: "middle" })}>
                             {hasFulfillmentLocation
                                 ? (<span>{this.highlight(loc.FulfillmentLocationId)}&nbsp;
                                     {this.renderInternalId(loc.InternalFulfillmentLocationId)}</span>)
@@ -112,7 +112,7 @@ class FulfillmentLocationsListItem extends React.Component {
                     : null}
                 {this.props.showFulfillerId
                     ? (
-                        <td style={this.style({color: "#333943", verticalAlign: "middle"})}>
+                        <td style={this.style({ color: "#333943", verticalAlign: "middle" })}>
                             {hasFulfiller
                                 ? (<span>{this.highlight(loc.FulfillerId)}&nbsp;
                                     {this.renderInternalId(loc.InternalFulfillerId)}</span>)
@@ -122,7 +122,7 @@ class FulfillmentLocationsListItem extends React.Component {
                     : null}
                 {this.props.additionalColumnRenderer
                     ? (
-                        <td style={this.style({color: "#333943", verticalAlign: "middle", textAlign: "center"})}>
+                        <td style={this.style({ color: "#333943", verticalAlign: "middle", textAlign: "center" })}>
                             {this.props.additionalColumnRenderer(loc)}
                         </td>
                     )
@@ -161,5 +161,5 @@ FulfillmentLocationsListItem.defaultProps = {
     language: 'eng'
 };
 
-export default translate('translations', {i18n: getI18nInstance()})(FulfillmentLocationsListItem);
+export default translate('translations', { i18n: getI18nInstance() })(FulfillmentLocationsListItem);
 

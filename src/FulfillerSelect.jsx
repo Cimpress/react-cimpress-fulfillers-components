@@ -2,16 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import VirtualizedSelect from 'react-virtualized-select';
 import SelectWrapper from '@cimpress/react-components/lib/SelectWrapper';
-import {shapes} from '@cimpress/react-components';
-import {getFulfillers} from './apis/fi.api';
+import { shapes } from '@cimpress/react-components';
+import { getFulfillers } from './apis/fi.api';
 import CustomizrClient from './apis/customizr.api';
 
 import '../styles/FulfillerSelect.css'
 
-import {getI18nInstance} from './i18n';
-import {translate} from 'react-i18next';
+import { getI18nInstance } from './i18n';
+import { translate } from 'react-i18next';
 
-let {Spinner} = shapes;
+let { Spinner } = shapes;
 
 class FulfillerSelect extends React.Component {
     constructor(props) {
@@ -51,7 +51,7 @@ class FulfillerSelect extends React.Component {
             })
             .catch(e => {
                 this.setState({
-                    fulfillers: [{fulfillerId: '-1', internalFulfillerId: -1, name: e.message || e.Message}],
+                    fulfillers: [{ fulfillerId: '-1', internalFulfillerId: -1, name: e.message || e.Message }],
                     fetchingFulfillers: false
                 })
             });
@@ -72,29 +72,38 @@ class FulfillerSelect extends React.Component {
             this.fetchFulfillers(this.props.accessToken);
         }
 
-        this.getRecentFulfillerIds();
+        this.getRecentFulfillerIds()
+            .then(() => {
+                if (this.state.recentFulfillerIds.length && !this.state.selectedFulfillerId) {
+                    this.setState({ selectedFulfillerId: this.state.recentFulfillerIds[0] });
+                }
+            });
     }
 
     onChange(e) {
         this.setState({
-            selectedFulfillerId: e.fulfillerId
+            selectedFulfillerId: e.fulfiller.fulfillerId
         });
 
         if (this.props.onChange) {
-            this.props.onChange({value: this.fulfillerMap[e.fulfillerId]});
+            this.props.onChange({ value: this.fulfillerMap[e.fulfiller.fulfillerId] });
         }
 
-        this.updateRecentFulfillerIds(e.fulfillerId);
+        this.updateRecentFulfillerIds(e.fulfiller.fulfillerId);
     }
 
     async getRecentFulfillerIds() {
         let settings = await this.customizrClient.getSettings(this.props.accessToken);
-        let recentFulfillerIds = settings.recentFulfillerIds;
+        let recentFulfillerIds = settings.recentFulfillerIds || [];
         this.setState({ recentFulfillerIds });
         return recentFulfillerIds;
     }
 
     async updateRecentFulfillerIds(fulfillerId) {
+        // initial, strictly visual client-side update to circumvent a wait on GET Customizr
+        this.setState({ recentFulfillerIds: [fulfillerId].concat(this.state.recentFulfillerIds.filter(id => id !== fulfillerId)) });
+
+        // consistent server-side update
         let recentFulfillerIds = await this.getRecentFulfillerIds();
         let update = { recentFulfillerIds: [fulfillerId].concat(recentFulfillerIds.filter(id => id !== fulfillerId)) };
         this.setState(update);
@@ -119,15 +128,16 @@ class FulfillerSelect extends React.Component {
         }
 
         let fulfillerOptions = fulfillers
-        .filter(f => this.props.includeArchived || !f.archived)
-        .map(f => Object.assign({}, f, {
-            optionRenderer: this.fulfillerSingleOptionRenderer,
-            value: `${f.fulfillerId} ${f.name}` // 'value' required for search and focus style change functionality
-        }));
+            .filter(f => this.props.includeArchived || !f.archived)
+            .map(f => ({
+                value: `${f.fulfillerId} ${f.name}`, // 'value' required for search and focus style change functionality
+                optionRenderer: this.fulfillerSingleOptionRenderer,
+                fulfiller: f
+            }))
 
         let recentFulfillerOptions = this.state.recentFulfillerIds
             .slice(0, 5)
-            .map(id => fulfillerOptions.find(f => f.fulfillerId === id))
+            .map(id => fulfillerOptions.find(f => f.fulfiller.fulfillerId === id))
             .filter(f => f)
             .map((f, index) => Object.assign({}, f, { value: `recent${index}` })); // do not highlight or show in search results
 
@@ -135,17 +145,25 @@ class FulfillerSelect extends React.Component {
             text: this.tt('recent-fulfillers'),
             optionRenderer: this.fulfillerOptionGroupLabelOptionRenderer
         };
+
         let fulfillersOptionGroupLabelOption = {
             text: this.tt('all-fulfillers'),
             optionRenderer: this.fulfillerOptionGroupLabelOptionRenderer
         };
 
-        return [
-            recentFulfillersOptionGroupLabelOption,
-            ...recentFulfillerOptions,
+        let allOptions = [
             fulfillersOptionGroupLabelOption,
             ...fulfillerOptions
         ];
+
+        if (recentFulfillerOptions.length) {
+            allOptions = [
+                recentFulfillersOptionGroupLabelOption,
+                ...recentFulfillerOptions
+            ].concat(allOptions);
+        }
+
+        return allOptions;
     }
 
     variableOptionRenderer(options) {
@@ -187,46 +205,48 @@ class FulfillerSelect extends React.Component {
                 className='VirtualizedSelectOption FulfillerSelect-option-group-label'
                 style={style}
                 key={key}>
-            <strong>{option.text}</strong>
-        </div>
+                <strong>{option.text}</strong>
+            </div>
         );
     }
 
     fulfillerSingleOptionRenderer ({ focusedOption, focusOption, key, option, selectValue, style, valueArray }) {
         let className = ['VirtualizedSelectOption'];
-        let content = this.formatTitle(option) || this.tt('misconfigured');
+        let content = this.formatTitle(option.fulfiller) || this.tt('misconfigured');
 
-        if (option.archived) {
+        if (option.fulfiller.archived) {
             className.push('VirtualizedSelectDisabledOption');
         }
 
-        if (option.fulfillerId === focusedOption.fulfillerId) {
-          className.push('VirtualizedSelectFocusedOption')
+        if (focusedOption && focusedOption.fulfiller && option.fulfiller.fulfillerId === focusedOption.fulfiller.fulfillerId) {
+            className.push('VirtualizedSelectFocusedOption')
         }
 
-        if (valueArray && valueArray.find(value => value.fulfillerId === option.fulfillerId)) {
-          className.push('VirtualizedSelectSelectedOption')
+        if (valueArray && valueArray.find(value => value.fulfillerId === option.fulfiller.fulfillerId)) {
+            className.push('VirtualizedSelectSelectedOption')
         }
 
         const events = { 
-            onClick: () => selectValue(option),
+            onClick: () => {
+                return selectValue(option);
+            },
             onMouseEnter: () => focusOption(option)
         };
 
         return (
-          <div
-            className={className.join(' ')}
-            key={key}
-            title={option.fulfillerId}
-            style={style}
-            {...events}>
-            {content}
-          </div>
+            <div
+                className={className.join(' ')}
+                key={key}
+                title={option.fulfiller.fulfillerId}
+                style={style}
+                {...events}>
+                {content}
+            </div>
         )
     }
 
-    fulfillerValueRenderer (option) {
-        return this.formatTitle(option) || this.tt('misconfigured');
+    fulfillerValueRenderer (fulfiller) {
+        return this.formatTitle(fulfiller) || this.tt('misconfigured');
     }
 
     formatTitle(fulfiller) {
@@ -257,8 +277,8 @@ class FulfillerSelect extends React.Component {
     }
 
     tt(key) {
-        let {t, language} = this.props;
-        return t(key, {lng: language});
+        let { t, language } = this.props;
+        return t(key, { lng: language });
     }
 
     render() {
@@ -309,4 +329,4 @@ FulfillerSelect.defaultProps = {
     includeName: true
 };
 
-export default translate('translations', {i18n: getI18nInstance()})(FulfillerSelect);
+export default translate('translations', { i18n: getI18nInstance() })(FulfillerSelect);

@@ -4,8 +4,8 @@ import FulfillmentLocationsListItem from './FulfillmentLocationsListItem';
 import Alert from '@cimpress/react-components/lib/Alert';
 import TextField from '@cimpress/react-components/lib/TextField';
 
-import {getI18nInstance} from './i18n';
-import {translate} from 'react-i18next';
+import { getI18nInstance } from './i18n';
+import { translate } from 'react-i18next';
 
 class FulfillmentLocationsList extends React.Component {
     constructor(props) {
@@ -45,12 +45,12 @@ class FulfillmentLocationsList extends React.Component {
 
         return (<thead>
         <tr className="cimpress-fl-list-header">
-            <th style={{whiteSpace: "nowrap"}}>{this.tt('name')}</th>
+            <th style={{ whiteSpace: "nowrap" }}>{this.tt('name')}</th>
             {this.props.showFulfillmentLocationId
-                ? (<th style={{whiteSpace: "nowrap"}}>{this.tt('location-id')}</th>)
+                ? (<th style={{ whiteSpace: "nowrap" }}>{this.tt('location-id')}</th>)
                 : null}
             {this.props.showFulfillerId
-                ? (<th style={{whiteSpace: "nowrap"}}>{this.tt('fulfiller-id')}</th>)
+                ? (<th style={{ whiteSpace: "nowrap" }}>{this.tt('fulfiller-id')}</th>)
                 : null}
             {this.props.additionalColumnTitle
                 ? (<th>{this.props.additionalColumnTitle}</th>)
@@ -69,7 +69,7 @@ class FulfillmentLocationsList extends React.Component {
     renderLocationsList(locations, recentLocations) {
         const allLocations = recentLocations
             ? recentLocations
-                .map(recentLocation => (Object.assign({}, recentLocation, {IsRecent: true})))
+                .map(recentLocation => (Object.assign({}, recentLocation, { IsRecent: true })))
                 .concat(locations)
             : locations;
 
@@ -109,7 +109,7 @@ class FulfillmentLocationsList extends React.Component {
 
                 paging = (
                     <div className="text-center">
-                        <ul className="pagination pagination-sm" style={this.style({margin: "0px"})}>
+                        <ul className="pagination pagination-sm" style={this.style({ margin: "0px" })}>
                             <li className={hasPrev
                                 ? undefined
                                 : "disabled"}>
@@ -153,7 +153,7 @@ class FulfillmentLocationsList extends React.Component {
         return (
             <div>
                 {this.props.showPartialResultPagingTop
-                    ? (<div style={this.style({marginBottom: "18px"})}>{paging}</div>)
+                    ? (<div style={this.style({ marginBottom: "18px" })}>{paging}</div>)
                     : null}
                 <table className="table table-hover cimpress-fl-list">
                     {this.renderHeader()}
@@ -176,8 +176,8 @@ class FulfillmentLocationsList extends React.Component {
     }
 
     tt(key) {
-        let {t, language} = this.props;
-        return t(key, {lng: language});
+        let { t, language } = this.props;
+        return t(key, { lng: language });
     }
 
     renderFiltering() {
@@ -190,7 +190,7 @@ class FulfillmentLocationsList extends React.Component {
             <TextField
                 label={this.tt("search-label")}
                 value={this.state.searchNeedle}
-                onChange={(v) => this.setState({searchNeedle: v.target.value, pageToRender: 1})}
+                onChange={(v) => this.setState({ searchNeedle: v.target.value, pageToRender: 1 })}
                 rightAddon={this.props.showCancelButton
                     ? (<button onClick={this.props.onCancelClicked} className="btn btn-default">
                         {this.props.cancelButtonCaption
@@ -220,7 +220,7 @@ class FulfillmentLocationsList extends React.Component {
                        message={`${this.tt('too-many-locations-found')} (${locations.length}). ${this.tt('continue-typing-to-filter-more')}`}
                        dismissible={false}/>
                 {this.tt('searching-possible-by')}
-                <ul style={this.style({paddingLeft: "inherit"})}>
+                <ul style={this.style({ paddingLeft: "inherit" })}>
                     <li>{this.tt('fulfiller-name')}</li>
                     <li>{this.tt('fulfiller-id')}</li>
                     <li>{this.tt('location-name')}</li>
@@ -321,4 +321,4 @@ FulfillmentLocationsList.defaultProps = {
     language: 'eng'
 };
 
-export default translate('translations', {i18n: getI18nInstance()})(FulfillmentLocationsList);
+export default translate('translations', { i18n: getI18nInstance() })(FulfillmentLocationsList);
