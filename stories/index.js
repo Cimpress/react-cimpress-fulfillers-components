@@ -1,6 +1,5 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
 import { FulfillerSelect } from '../src/index'
 import { CssLoader } from '@cimpress/react-components'
 
@@ -18,17 +17,12 @@ let wrapInLoader = component => {
   );
 };
 
-let newComp = props => {
-  return (<h1>this.props.text</h1>);
-}
-
 storiesOf('Fulfiller Selection sourced statically, with access token')
   .add('with everything included', () => wrapInLoader(
     <FulfillerSelect
       accessToken='Bearer bear'
       language={'eng'}
       fulfillers={fulfillers}
-      onChange={v => {}}
       includeArchived={true}
       includeInternalId={true}
       includeId={true}
@@ -85,7 +79,6 @@ storiesOf('Fulfiller Selection sourced statically, without access token')
     <FulfillerSelect
       language={'eng'}
       fulfillers={fulfillers}
-      onChange={v => {}}
       includeArchived={true}
       includeInternalId={true}
       includeId={true}

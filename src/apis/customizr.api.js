@@ -22,7 +22,9 @@ class CustomizrClient {
   }
 
   static addAuth(url, options, token) {
-    let bearerToken = (token || "").startsWith("Bearer ") ? token : `Bearer ${token}`;
+    let bearerToken = (token || "").startsWith("Bearer ")
+          ? token
+          : `Bearer ${token}`;
     if (CustomizrClient._isCimpressDomain(url)) {
       options.headers = Object.assign({}, (options.headers || {}), {
         Authorization: bearerToken
@@ -40,7 +42,9 @@ class CustomizrClient {
       let response =  await axios.get(url, options);
       return response.data;
     } catch (err) {
-      if (err.response.status !== 404) { throw err; }
+      if (err.response.status !== 404) {
+          throw err;
+      }
       return {};
     }
   }

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getI18nInstance} from './i18n';
-import {translate} from 'react-i18next';
+import { getI18nInstance } from './i18n';
+import { translate } from 'react-i18next';
 
 class FulfillmentLocationTitle extends React.Component {
 
@@ -14,8 +14,8 @@ class FulfillmentLocationTitle extends React.Component {
     }
 
     tt(key) {
-        let {t, language} = this.props;
-        return t(key, {lng: language});
+        let { t, language } = this.props;
+        return t(key, { lng: language });
     }
 
     render() {
@@ -24,16 +24,16 @@ class FulfillmentLocationTitle extends React.Component {
 
         return (
             <div className="cmpr-fl-title">
-                <div className="clearfix" style={this.style({position: "relative", marginBottom: "10px"})}>
+                <div className="clearfix" style={this.style({ position: "relative", marginBottom: "10px" })}>
                     <div className="pull-left">
                         <div className="cmpr-fl-title-caption">{this.tt('fulfiller')}</div>
-                        <h3 className="card-title" style={this.style({display: "inline"})}>
+                        <h3 className="card-title" style={this.style({ display: "inline" })}>
                             {loc.FulfillerName}
                         </h3>
                     </div>
                     <div className="pull-left">
                         <div className="cmpr-fl-title-caption">&nbsp;</div>
-                        <h3 style={this.style({display: "inline"})}>
+                        <h3 style={this.style({ display: "inline" })}>
                             &nbsp;
                             &bull;
                             &nbsp;
@@ -41,12 +41,12 @@ class FulfillmentLocationTitle extends React.Component {
                     </div>
                     <div className="pull-left">
                         <div className="cmpr-fl-title-caption">{this.tt('location')}</div>
-                        <h3 style={this.style({display: "inline"})}>
+                        <h3 style={this.style({ display: "inline" })}>
                             {loc.FulfillmentLocationName}
                         </h3>
                     </div>
                     <div className="pull-right cmpr-fr-title-ids"
-                         style={this.style({position: "absolute", right: "0px", bottom: "4px"})}>
+                         style={this.style({ position: "absolute", right: "0px", bottom: "4px" })}>
                         <div>
                             <span className="cmpr-fl-title-caption">{this.tt('fulfiller')}:&nbsp;</span>
                             {loc.FulfillerId}
@@ -89,4 +89,4 @@ FulfillmentLocationTitle.defaultProps = {
     language: 'eng'
 };
 
-export default translate('translations', {i18n: getI18nInstance()})(FulfillmentLocationTitle);
+export default translate('translations', { i18n: getI18nInstance() })(FulfillmentLocationTitle);

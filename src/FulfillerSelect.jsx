@@ -2,16 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import VirtualizedSelect from 'react-virtualized-select';
 import SelectWrapper from '@cimpress/react-components/lib/SelectWrapper';
-import {shapes} from '@cimpress/react-components';
-import {getFulfillers} from './apis/fi.api';
+import { shapes } from '@cimpress/react-components';
+import { getFulfillers } from './apis/fi.api';
 import CustomizrClient from './apis/customizr.api';
 
 import '../styles/FulfillerSelect.css'
 
-import {getI18nInstance} from './i18n';
-import {translate} from 'react-i18next';
+import { getI18nInstance } from './i18n';
+import { translate } from 'react-i18next';
 
-let {Spinner} = shapes;
+let { Spinner } = shapes;
 
 class FulfillerSelect extends React.Component {
     constructor(props) {
@@ -51,7 +51,7 @@ class FulfillerSelect extends React.Component {
             })
             .catch(e => {
                 this.setState({
-                    fulfillers: [{fulfillerId: '-1', internalFulfillerId: -1, name: e.message || e.Message}],
+                    fulfillers: [{ fulfillerId: '-1', internalFulfillerId: -1, name: e.message || e.Message }],
                     fetchingFulfillers: false
                 })
             });
@@ -173,15 +173,15 @@ class FulfillerSelect extends React.Component {
     fulfillerSpinnerOptionRenderer({ option, key, style }) {
         return (
             <div
-            className='VirtualizedSelectOption VirtualizedSelectDisabledOption'
-            style={style}
-            key={key}>
-            <span className='FulfillerSelect-vertical-center'>
-            <Spinner className='FulfillerSelect-Spinner-20' size={20}/>
-            <span className='FulfillerSelect-Spinner-text'>
-            {option.text}
-            </span>
-            </span>
+                className='VirtualizedSelectOption VirtualizedSelectDisabledOption'
+                style={style}
+                key={key}>
+                <span className='FulfillerSelect-vertical-center'>
+                    <Spinner className='FulfillerSelect-Spinner-20' size={20}/>
+                    <span className='FulfillerSelect-Spinner-text'>
+                        {option.text}
+                    </span>
+                </span>
             </div>
         );
     }
@@ -189,12 +189,12 @@ class FulfillerSelect extends React.Component {
     fulfillerWarningMessageOptionRenderer({ option, key, style }) {
         return (
             <div
-            className='VirtualizedSelectOption VirtualizedSelectDisabledOption'
-            style={style}
-            key={key}>
-            <span>
-            {option.text}
-            </span>
+                className='VirtualizedSelectOption VirtualizedSelectDisabledOption'
+                style={style}
+                key={key}>
+                <span>
+                    {option.text}
+                </span>
             </div>
         );
     }
@@ -202,10 +202,10 @@ class FulfillerSelect extends React.Component {
     fulfillerOptionGroupLabelOptionRenderer({ option, key, style }) {
         return (
             <div
-            className='VirtualizedSelectOption FulfillerSelect-option-group-label'
-            style={style}
-            key={key}>
-            <strong>{option.text}</strong>
+                className='VirtualizedSelectOption FulfillerSelect-option-group-label'
+                style={style}
+                key={key}>
+                <strong>{option.text}</strong>
             </div>
         );
     }
@@ -235,12 +235,12 @@ class FulfillerSelect extends React.Component {
 
         return (
             <div
-            className={className.join(' ')}
-            key={key}
-            title={option.fulfiller.fulfillerId}
-            style={style}
-            {...events}>
-            {content}
+                className={className.join(' ')}
+                key={key}
+                title={option.fulfiller.fulfillerId}
+                style={style}
+                {...events}>
+                {content}
             </div>
         )
     }
@@ -277,24 +277,24 @@ class FulfillerSelect extends React.Component {
     }
 
     tt(key) {
-        let {t, language} = this.props;
-        return t(key, {lng: language});
+        let { t, language } = this.props;
+        return t(key, { lng: language });
     }
 
     render() {
         return (
             <div>
-            <SelectWrapper
-            selectedSelect={VirtualizedSelect}
-            label={this.props.label || this.tt('label')}
-            value={this.fulfillerMap[this.state.selectedFulfillerId]}
-            options={this.getOptions()}
-            noResultsText={this.tt('no-results-found')}
-            clearable={false}
-            onChange={this.onChange}
-            optionRenderer={this.variableOptionRenderer}
-            valueRenderer={this.fulfillerValueRenderer}
-            tether/>
+                <SelectWrapper
+                    selectedSelect={VirtualizedSelect}
+                    label={this.props.label || this.tt('label')}
+                    value={this.fulfillerMap[this.state.selectedFulfillerId]}
+                    options={this.getOptions()}
+                    noResultsText={this.tt('no-results-found')}
+                    clearable={false}
+                    onChange={this.onChange}
+                    optionRenderer={this.variableOptionRenderer}
+                    valueRenderer={this.fulfillerValueRenderer}
+                    tether/>
             </div>
         )
     }
@@ -329,4 +329,4 @@ FulfillerSelect.defaultProps = {
     includeName: true
 };
 
-export default translate('translations', {i18n: getI18nInstance()})(FulfillerSelect);
+export default translate('translations', { i18n: getI18nInstance() })(FulfillerSelect);

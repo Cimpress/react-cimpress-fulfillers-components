@@ -2,3 +2,4 @@ node_modules
 src/locales
 *.pid
 main.js
+eslint.report.html

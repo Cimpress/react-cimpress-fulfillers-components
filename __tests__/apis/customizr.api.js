@@ -23,7 +23,7 @@ describe("for CustomizrClient", () => {
   describe("for getSettings", () => {
     it("correctly retrieves settings", async () => {
       nock(serviceUrl)
-        .defaultReplyHeaders({ "access-control-allow-origin": "*"})
+        .defaultReplyHeaders({ "access-control-allow-origin": "*" })
         .get(`/v1/resources/${encodeURIComponent(resourceUrl)}/settings`)
         .reply(200, mockSettings);
 
@@ -42,7 +42,7 @@ describe("for CustomizrClient", () => {
       let mockUpdatedSettings = Object.assign({}, mockUpdatedSettings, update);
 
       nock(serviceUrl)
-        .defaultReplyHeaders({ "access-control-allow-origin": "*"})
+        .defaultReplyHeaders({ "access-control-allow-origin": "*" })
         .get(`/v1/resources/${encodeURIComponent(resourceUrl)}/settings`)
         .reply(200, mockSettings)
         .put(`/v1/resources/${encodeURIComponent(resourceUrl)}/settings`)
