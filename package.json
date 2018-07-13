@@ -1,6 +1,6 @@
 {
   "name": "react-cimpress-fulfillers-components",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "author": {
     "name": "Trdelnik Squad",
     "email": "TrdelnikSquad@cimpress.com"
@@ -27,11 +27,13 @@
     "cimpress-fulfiller-identity": "^0.1.6",
     "cimpress-fulfillment-location": "^0.1.10",
     "i18next": "^11.3.2",
+    "pope": "^2.0.2",
     "react-highlight-words": "^0.10.0",
     "react-i18next": "^7.7.0",
     "react-select": "^1.2.1",
     "react-virtualized-select": "^3.1.3",
-    "regenerator": "^0.13.2"
+    "regenerator": "^0.13.2",
+    "regenerator-runtime": "^0.12.0"
   },
   "devDependencies": {
     "@storybook/react": "^3.4.8",
