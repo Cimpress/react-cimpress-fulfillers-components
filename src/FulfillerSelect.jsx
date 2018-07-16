@@ -75,7 +75,11 @@ class FulfillerSelect extends React.Component {
         this.getRecentFulfillerIds()
             .then(() => {
                 if (this.state.recentFulfillerIds.length && !this.state.selectedFulfillerId) {
-                    this.setState({ selectedFulfillerId: this.state.recentFulfillerIds[0] });
+                    this.setState({ selectedFulfillerId: this.state.recentFulfillerIds[0] }, () => {
+                        if (this.props.onChange) {
+                            this.props.onChange({ value: this.fulfillerMap[this.state.recentFulfillerIds[0]] });
+                        }
+                    });
                 }
             });
     }
@@ -226,7 +230,7 @@ class FulfillerSelect extends React.Component {
             className.push('VirtualizedSelectSelectedOption')
         }
 
-        const events = { 
+        const events = {
             onClick: () => {
                 return selectValue(option);
             },
