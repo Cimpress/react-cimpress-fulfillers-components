@@ -57,22 +57,13 @@ class FulfillerSelect extends React.Component {
             });
     }
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.accessToken !== this.props.accessToken) {
-            this.fetchFulfillers(this.props.accessToken);
-        }
-    }
-
-    componentDidMount() {
-        if (!this.props.accessToken) {
-            return;
-        }
-
-        if (!this.props.fulfillers) {
-            this.fetchFulfillers(this.props.accessToken);
-        }
-
-        this.getRecentFulfillerIds()
+    refreshComponentData() {
+        return Promise.all([
+            !this.props.fulfillers
+                ? this.fetchFulfillers(this.props.accessToken)
+                : Promise.resolve(),
+            this.getRecentFulfillerIds()
+        ])
             .then(() => {
                 if (this.state.recentFulfillerIds.length && !this.state.selectedFulfillerId) {
                     this.setState({ selectedFulfillerId: this.state.recentFulfillerIds[0] }, () => {
@@ -84,7 +75,25 @@ class FulfillerSelect extends React.Component {
             });
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.accessToken !== this.props.accessToken) {
+          return this.refreshComponentData();
+        }
+    }
+
+    componentDidMount() {
+        if (!this.props.accessToken) {
+            return;
+        }
+
+        return this.refreshComponentData();
+    }
+
     onChange(e) {
+        if (e.fulfiller.fulfillerId === this.state.selectedFulfillerId) {
+          return;
+        }
+
         this.setState({
             selectedFulfillerId: e.fulfiller.fulfillerId
         });

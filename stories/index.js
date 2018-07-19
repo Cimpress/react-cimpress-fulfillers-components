@@ -1,5 +1,5 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+import { storiesOf, action } from '@storybook/react';
 import { FulfillerSelect } from '../src/index'
 import { CssLoader } from '@cimpress/react-components'
 
@@ -27,6 +27,7 @@ storiesOf('Fulfiller Selection sourced statically, with access token')
       includeInternalId={true}
       includeId={true}
       includeName={true}
+      onChange={action('selected')}
     />
   ))
   .add('with name, and both IDs included', () => wrapInLoader(
@@ -38,6 +39,7 @@ storiesOf('Fulfiller Selection sourced statically, with access token')
       includeInternalId={true}
       includeId={true}
       includeName={true}
+      onChange={action('selected')}
     />
   ))
   .add('with name and ID included', () => wrapInLoader(
@@ -49,6 +51,7 @@ storiesOf('Fulfiller Selection sourced statically, with access token')
       includeInternalId={false}
       includeId={true}
       includeName={true}
+      onChange={action('selected')}
     />
   ))
   .add('with name included', () => wrapInLoader(
@@ -60,6 +63,7 @@ storiesOf('Fulfiller Selection sourced statically, with access token')
       includeInternalId={false}
       includeId={false}
       includeName={true}
+      onChange={action('selected')}
     />
   ))
   .add('with nothing included', () => wrapInLoader(
@@ -71,6 +75,7 @@ storiesOf('Fulfiller Selection sourced statically, with access token')
       includeInternalId={false}
       includeId={false}
       includeName={false}
+      onChange={action('selected')}
     />
   ));
 
@@ -83,6 +88,7 @@ storiesOf('Fulfiller Selection sourced statically, without access token')
       includeInternalId={true}
       includeId={true}
       includeName={true}
+      onChange={action('selected')}
     />
   ));
 
@@ -95,6 +101,7 @@ storiesOf('Fulfiller Selection sourced dynamically', module)
       includeInternalId={true}
       includeId={true}
       includeName={true}
+      onChange={action('selected')}
     />
   ));
 
