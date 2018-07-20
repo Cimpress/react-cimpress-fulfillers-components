@@ -28,7 +28,7 @@ class FulfillerSelect extends React.Component {
 
         this.customizrClient = new CustomizrClient(global.CUSTOMIZR_URL || null, 'https://trdlnk.cimpress.io');
 
-        this.onChange = this.onChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.fulfillerOptionGroupLabelOptionRenderer = this.fulfillerOptionGroupLabelOptionRenderer.bind(this);
         this.fulfillerSingleOptionRenderer = this.fulfillerSingleOptionRenderer.bind(this);
         this.fulfillerValueRenderer = this.fulfillerValueRenderer.bind(this);
@@ -41,7 +41,7 @@ class FulfillerSelect extends React.Component {
             fetchingFulfillers: true
         });
 
-        getFulfillers(accessToken)
+        return getFulfillers(accessToken)
             .then(fulfillers => {
                 fulfillers.forEach(f => this.fulfillerMap[f.fulfillerId] = f);
                 this.setState({
@@ -57,9 +57,27 @@ class FulfillerSelect extends React.Component {
             });
     }
 
+    refreshComponentData() {
+        return Promise.all([
+            !this.props.fulfillers
+                ? this.fetchFulfillers(this.props.accessToken)
+                : Promise.resolve(),
+            this.getRecentFulfillerIds()
+        ])
+            .then(() => {
+                if (this.state.recentFulfillerIds.length && !this.state.selectedFulfillerId) {
+                    this.setState({ selectedFulfillerId: this.state.recentFulfillerIds[0] }, () => {
+                        if (this.props.onChange) {
+                            this.props.onChange(this.fulfillerMap[this.state.recentFulfillerIds[0]]);
+                        }
+                    });
+                }
+            });
+    }
+
     componentDidUpdate(prevProps) {
         if (prevProps.accessToken !== this.props.accessToken) {
-            this.fetchFulfillers(this.props.accessToken);
+          this.refreshComponentData();
         }
     }
 
@@ -68,29 +86,20 @@ class FulfillerSelect extends React.Component {
             return;
         }
 
-        if (!this.props.fulfillers) {
-            this.fetchFulfillers(this.props.accessToken);
-        }
-
-        this.getRecentFulfillerIds()
-            .then(() => {
-                if (this.state.recentFulfillerIds.length && !this.state.selectedFulfillerId) {
-                    this.setState({ selectedFulfillerId: this.state.recentFulfillerIds[0] }, () => {
-                        if (this.props.onChange) {
-                            this.props.onChange({ value: this.fulfillerMap[this.state.recentFulfillerIds[0]] });
-                        }
-                    });
-                }
-            });
+        this.refreshComponentData();
     }
 
-    onChange(e) {
+    handleChange(e) {
+        if (e.fulfiller.fulfillerId === this.state.selectedFulfillerId) {
+          return;
+        }
+
         this.setState({
             selectedFulfillerId: e.fulfiller.fulfillerId
         });
 
         if (this.props.onChange) {
-            this.props.onChange({ value: this.fulfillerMap[e.fulfiller.fulfillerId] });
+            this.props.onChange(this.fulfillerMap[e.fulfiller.fulfillerId]);
         }
 
         this.updateRecentFulfillerIds(e.fulfiller.fulfillerId);
@@ -295,7 +304,7 @@ class FulfillerSelect extends React.Component {
                     options={this.getOptions()}
                     noResultsText={this.tt('no-results-found')}
                     clearable={false}
-                    onChange={this.onChange}
+                    onChange={this.handleChange}
                     optionRenderer={this.variableOptionRenderer}
                     valueRenderer={this.fulfillerValueRenderer}
                     tether/>
