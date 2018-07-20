@@ -65,7 +65,6 @@ class FulfillerSelect extends React.Component {
             this.getRecentFulfillerIds()
         ])
             .then(() => {
-                console.log();
                 if (this.state.recentFulfillerIds.length && !this.state.selectedFulfillerId) {
                     this.setState({ selectedFulfillerId: this.state.recentFulfillerIds[0] }, () => {
                         if (this.props.onChange) {
