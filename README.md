@@ -8,7 +8,7 @@ react-cimpress-fulfillers-components is a library of React components facilitati
 
 Install `react-cimpress-fulfillers-components` with your package manager of choice:
 ```
-npm install -g gatefold
+npm install --save react-cimpress-fulfillers-components
 ```
 
 (**New!**) The simplest way to get started is to visit the library's [demo page](https://trdlnk.cimpress.io/demo-fulfillers-components) at our [home page](https://trdlnk.cimpress.io). There you'll find example applications of the components with ready-to-paste code snippets.
@@ -34,8 +34,8 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Ivan Stanishev** <[istanishev@cimpress.com](mailto:istanishev@cimpress.com)
-* **Trdelnik Squad** <[TrdelnikSquad@cimpress.com](mailto:TrdelnikSquad@cimpress.com)
+* **Ivan Stanishev** <[istanishev@cimpress.com](mailto:istanishev@cimpress.com)>
+* **Trdelnik Squad** <[TrdelnikSquad@cimpress.com](mailto:TrdelnikSquad@cimpress.com)>
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
