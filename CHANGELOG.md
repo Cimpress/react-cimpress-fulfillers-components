@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [0.5.2] - 2018-07-20
 ### Fixed
-- Moved react and @cimpress/react-components as peer dependencies 
+- Move react and @cimpress/react-components as peer dependencies 
 
 ## [0.5.0] - 2018-07-20
 ### Changed
