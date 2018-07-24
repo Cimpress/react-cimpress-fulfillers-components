@@ -1,6 +1,6 @@
 {
   "name": "react-cimpress-fulfillers-components",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "author": {
     "name": "Trdelnik Squad",
     "email": "TrdelnikSquad@cimpress.com"
@@ -20,6 +20,7 @@
   ],
   "peerDependencies": {
     "react": "^15.0.0 || ^16.0.0",
+    "react-dom": "^15.0.0 || ^16.0.0",
     "@cimpress/react-components": "^3.0.0 || ^4.0.0"
   },
   "dependencies": {
