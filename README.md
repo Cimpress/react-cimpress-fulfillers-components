@@ -37,7 +37,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 * **Ivan Stanishev** <[istanishev@cimpress.com](mailto:istanishev@cimpress.com)>
 * **Trdelnik Squad** <[TrdelnikSquad@cimpress.com](mailto:TrdelnikSquad@cimpress.com)>
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/Cimpress/react-cimpress-fulfillers-components/contributors) who participated in this project.
 
 ## License
 
