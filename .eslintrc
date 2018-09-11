@@ -26,7 +26,6 @@
         "plugin:react/recommended"
     ],
     "rules": {
-        // "off", "warn", "error" : values to en/disable rules
         "quotes": ["off", "single"],
         "no-unused-vars": ["error", {"vars": "all", "args": "all", "argsIgnorePattern": "^(next|_+)","ignoreRestSiblings": false }],
         "no-console": "error",
@@ -37,7 +36,7 @@
         "operator-linebreak": ["warn", "before"],
         "space-infix-ops": ["warn", {"int32Hint": true}],
         "newline-per-chained-call": ["warn"],
-        "keyword-spacing": ["warn", { overrides: {} }],
+        "keyword-spacing": ["warn", { "overrides": {} }],
         "object-curly-spacing": ["warn", "always", {
             "arraysInObjects": false,
             "objectsInObjects": false
@@ -45,7 +44,6 @@
         "array-bracket-spacing": ["warn", "never"],
         "no-undef": ["error"],
         "brace-style": ["error", "1tbs"],
-        // React specific
         "react/display-name": ["warn"]
     }
 }
