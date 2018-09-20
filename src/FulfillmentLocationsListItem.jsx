@@ -28,6 +28,7 @@ class FulfillmentLocationsListItem extends React.Component {
                 highlightClassName={"highlight"}
                 highlightStyle={this.style({ backgroundColor: "yellow", padding: "0px", color: "black" })}
                 searchWords={[this.props.highlight]}
+                autoEscape={true}
                 textToHighlight={target + ''}
             />
         );

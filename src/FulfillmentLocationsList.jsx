@@ -250,7 +250,7 @@ class FulfillmentLocationsList extends React.Component {
         return (
             <div id={this._id('list-wrapper')}>
                 {this.renderFiltering()}
-                {filteredLocations.length == 0 && filteredRecentLocations.length == 0
+                {(!filteredLocations || filteredLocations.length == 0) && (!filteredRecentLocations || filteredRecentLocations.length == 0)
                     ? <Alert type={"warning"}
                              message={this.tt("no-locations-found")}
                              dismissible={false}/>
