@@ -1,6 +1,6 @@
 {
   "name": "react-cimpress-fulfillers-components",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "author": {
     "name": "Trdelnik Squad",
     "email": "TrdelnikSquad@cimpress.com"
@@ -10,7 +10,8 @@
   "scripts": {
     "code-check": "eslint --ext .js --ext .jsx src",
     "eslint-report": "eslint --ext .js --ext .jsx . -f node_modules/eslint-html-reporter/reporter.js -o eslint.report.html",
-    "build": "node node_modules/grunt-cli/bin/grunt webpack && babel src -d lib --copy-files",
+    "translate": "cimpress-translations-cli -a 7f446c56-8c8e-438b-9cb2-64e5d7b1d89c -c ${CLIENT_ID} -s ${CLIENT_SECRET} -t ./src/locales/translations.json",
+    "compile": "babel src -d lib --copy-files",
     "storybook": "((kill -9 `cat mockserver.pid`; kill -9 `cat storybook.pid`) || true) && (node_modules/.bin/start-storybook -p 9001 -c .storybook & echo $! > storybook.pid) && (node_modules/.bin/mockserver -p 9102 -m ./mocks/ & echo $! > mockserver.pid)"
   },
   "main": "lib/index.js",
@@ -46,18 +47,13 @@
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
-    "cimpress-translations-webpack-plugin": "^1.1.3",
+    "cimpress-translations-cli": "^0.1.5",
     "css-loader": "^0.28.11",
     "eslint": "^4.2.0",
     "eslint-html-reporter": "^0.5.2",
     "eslint-plugin-react": "^7.5.1",
-    "grunt": "^1.0.1",
-    "grunt-cli": "^1.2.0",
-    "grunt-webpack": "^3.1.2",
     "jest": "^23.1.0",
-    "load-grunt-tasks": "^3.5.2",
     "mockserver": "^1.11.0",
-    "nock": "^9.3.3",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "style-loader": "^0.21.0",
