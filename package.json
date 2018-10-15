@@ -1,6 +1,6 @@
 {
   "name": "react-cimpress-fulfillers-components",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "author": {
     "name": "Trdelnik Squad",
     "email": "TrdelnikSquad@cimpress.com"
@@ -9,10 +9,11 @@
   "license": "Apache-2.0",
   "scripts": {
     "code-check": "eslint --ext .js --ext .jsx src",
+    "start": "cross-env LOCAL_DEVELOPMENT=yes node_modules/.bin/start-storybook -p 3000",
     "eslint-report": "eslint --ext .js --ext .jsx . -f node_modules/eslint-html-reporter/reporter.js -o eslint.report.html",
     "translate": "cimpress-translations-cli -a 7f446c56-8c8e-438b-9cb2-64e5d7b1d89c -c ${CLIENT_ID} -s ${CLIENT_SECRET} -t ./src/locales/translations.json",
     "compile": "babel src -d lib --copy-files",
-    "storybook": "((kill -9 `cat mockserver.pid`; kill -9 `cat storybook.pid`) || true) && (node_modules/.bin/start-storybook -p 9001 -c .storybook & echo $! > storybook.pid) && (node_modules/.bin/mockserver -p 9102 -m ./mocks/ & echo $! > mockserver.pid)"
+    "storybook": "cross-env LOCAL_DEVELOPMENT=mock node_modules/.bin/start-storybook -p 9001 -c .storybook"
   },
   "main": "lib/index.js",
   "files": [
@@ -25,7 +26,9 @@
     "@cimpress/react-components": "^3.0.0 || ^4.0.0 || ^5.0.0"
   },
   "dependencies": {
+    "@storybook/addon-knobs": "^3.4.11",
     "axios": "^0.18.0",
+    "cimpress-customizr": "^1.1.1",
     "cimpress-fulfiller-identity": "^0.1.6",
     "cimpress-fulfillment-location": "^0.1.10",
     "i18next": "^11.3.2",
@@ -40,6 +43,7 @@
   "devDependencies": {
     "@cimpress/react-components": "^5.2.5",
     "@storybook/react": "^3.4.8",
+    "auth0-sso-login": "^3.0.123",
     "aws-sdk": "^2.263.1",
     "babel": "^6.23.0",
     "babel-cli": "^6.24.1",
@@ -48,15 +52,17 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "cimpress-translations-cli": "^0.1.5",
+    "cross-env": "^5.2.0",
     "css-loader": "^0.28.11",
     "eslint": "^4.2.0",
     "eslint-html-reporter": "^0.5.2",
     "eslint-plugin-react": "^7.5.1",
     "jest": "^23.1.0",
-    "mockserver": "^1.11.0",
+    "jwt-decode": "^2.2.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "style-loader": "^0.21.0",
-    "webpack": "^3.0.0"
+    "webpack": "^3.0.0",
+    "xhr-mock": "^2.4.1"
   }
 }

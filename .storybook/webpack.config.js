@@ -1,11 +1,27 @@
-module.exports = (storybookBaseConfig, configType) => {
-    storybookBaseConfig.module.rules.push({
-              test: /\.css$/,
-              use: [
-                { loader: 'style-loader' },
-                { loader: 'css-loader' }
-              ]
-    });
+let webpack = require('webpack');
 
-    return storybookBaseConfig;
+module.exports = {
+    entry: [
+        'regenerator-runtime/runtime',
+        "./dev/index.js",
+        ],
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                use: ["style-loader", "css-loader"]
+            }
+        ]
+    },
+    node: {
+        fs: "empty"
+    },
+    resolveLoader: {
+        modules: ['node_modules']
+    },
+    plugins: [
+        new webpack.EnvironmentPlugin([
+            "LOCAL_DEVELOPMENT"
+        ])
+    ]
 };

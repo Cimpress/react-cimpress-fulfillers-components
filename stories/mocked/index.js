@@ -1,16 +1,37 @@
 import React from 'react';
 import { storiesOf, action } from '@storybook/react';
-import { FulfillerSelect } from '../src/index'
+import { FulfillerSelect } from '../../src/index'
 import { CssLoader } from '@cimpress/react-components'
 
-import fulfillers from './fulfillers'
+import fulfillers from './fulfillers';
+import mock from 'xhr-mock';
 
-global.CUSTOMIZR_URL = 'http://localhost:9102';
-global.FULFILLER_IDENTITY_URL = 'http://localhost:9102';
-global.FULFILLMENT_LOCATION_URL = 'http://localhost:9102';
+// NOTE:
+// NOTE: This mocks the services for ALL stories. Move it inside stories to achieve more granular approach.
+// NOTE:
+mock.setup();
+mock.get('https://fulfilleridentity.trdlnk.cimpress.io/v1/fulfillers', {
+    statusCode: 200,
+    body: fulfillers
+});
+
+mock.get('https://customizr.at.cimpress.io/v1/resources/https%3A%2F%2Ftrdlnk.cimpress.io/settings', {
+    statusCode: 200,
+    body: {
+        "recentFulfillerIds": ["abcdef3", "abcdef17", "abcdef23", "abcdef66", "notfound"]
+    }
+});
+
+mock.put('https://customizr.at.cimpress.io/v1/resources/https%3A%2F%2Ftrdlnk.cimpress.io/settings', {
+    statusCode: 200,
+    body: {
+        "recentFulfillerIds": ["abcdef3", "abcdef17", "abcdef23", "notfound"]
+    }
+});
+/// END NOTE ^^^
 
 let wrapInLoader = component => {
-  return (
+    return (
     <CssLoader>
       {component}
     </CssLoader>
@@ -93,8 +114,7 @@ storiesOf('Fulfiller Selection sourced statically, without access token')
   ));
 
 storiesOf('Fulfiller Selection sourced dynamically', module)
-  .add('with everything included', () => wrapInLoader(
-    <FulfillerSelect
+  .add('with everything included', () => wrapInLoader(<FulfillerSelect
       accessToken='Bearer bear'
       language={'eng'}
       includeArchived={true}

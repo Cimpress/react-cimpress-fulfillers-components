@@ -4,7 +4,7 @@ import VirtualizedSelect from 'react-virtualized-select';
 import SelectWrapper from '@cimpress/react-components/lib/SelectWrapper';
 import { shapes } from '@cimpress/react-components';
 import { getFulfillers } from './apis/fi.api';
-import CustomizrClient from './apis/customizr.api';
+import {CustomizrClient} from 'cimpress-customizr';
 
 import '../styles/FulfillerSelect.css'
 
@@ -26,7 +26,9 @@ class FulfillerSelect extends React.Component {
             fetchingFulfillers: true
         };
 
-        this.customizrClient = new CustomizrClient(global.CUSTOMIZR_URL || null, 'https://trdlnk.cimpress.io');
+        this.customizrClient = new CustomizrClient({
+            resource: 'https://trdlnk.cimpress.io'
+        });
 
         this.handleChange = this.handleChange.bind(this);
         this.fulfillerOptionGroupLabelOptionRenderer = this.fulfillerOptionGroupLabelOptionRenderer.bind(this);
@@ -47,7 +49,7 @@ class FulfillerSelect extends React.Component {
                 this.setState({
                     fulfillers: fulfillers.sort((a, b) => a.name.localeCompare(b.name)),
                     fetchingFulfillers: false
-                })
+                });
             })
             .catch(e => {
                 this.setState({
@@ -106,7 +108,9 @@ class FulfillerSelect extends React.Component {
     }
 
     async getRecentFulfillerIds() {
+        console.log('going...');
         let settings = await this.customizrClient.getSettings(this.props.accessToken);
+        console.log('going...gone', settings, this.props.accessToken);
         let recentFulfillerIds = settings.recentFulfillerIds || [];
         this.setState({ recentFulfillerIds });
         return recentFulfillerIds;
