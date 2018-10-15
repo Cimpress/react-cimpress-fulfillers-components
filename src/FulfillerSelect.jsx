@@ -4,7 +4,7 @@ import VirtualizedSelect from 'react-virtualized-select';
 import SelectWrapper from '@cimpress/react-components/lib/SelectWrapper';
 import { shapes } from '@cimpress/react-components';
 import { getFulfillers } from './apis/fi.api';
-import {CustomizrClient} from 'cimpress-customizr';
+import { CustomizrClient } from 'cimpress-customizr';
 
 import '../styles/FulfillerSelect.css'
 
@@ -108,9 +108,7 @@ class FulfillerSelect extends React.Component {
     }
 
     async getRecentFulfillerIds() {
-        console.log('going...');
         let settings = await this.customizrClient.getSettings(this.props.accessToken);
-        console.log('going...gone', settings, this.props.accessToken);
         let recentFulfillerIds = settings.recentFulfillerIds || [];
         this.setState({ recentFulfillerIds });
         return recentFulfillerIds;
