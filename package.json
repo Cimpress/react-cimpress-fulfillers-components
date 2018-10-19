@@ -1,6 +1,6 @@
 {
   "name": "react-cimpress-fulfillers-components",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "author": {
     "name": "Trdelnik Squad",
     "email": "TrdelnikSquad@cimpress.com"
@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "cimpress-fulfiller-identity": "^0.1.6",
+    "cimpress-fulfiller-identity": "^0.1.8",
     "cimpress-fulfillment-location": "^0.1.10",
     "i18next": "^11.3.2",
     "pope": "^2.0.2",
