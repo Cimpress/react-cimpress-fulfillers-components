@@ -1,4 +1,0 @@
-HTTP/1.1 204 OK
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Headers: Authorization, Content-Type
-Access-Control-Allow-Methods: GET, PUT
