@@ -21,7 +21,7 @@ module.exports = {
     },
     plugins: [
         new webpack.EnvironmentPlugin([
-            "LOCAL_DEVELOPMENT"
+            "SERVICE_DEPENDENCIES"
         ])
     ]
 };

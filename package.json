@@ -9,11 +9,11 @@
   "license": "Apache-2.0",
   "scripts": {
     "code-check": "eslint --ext .js --ext .jsx src",
-    "start": "cross-env LOCAL_DEVELOPMENT=yes node_modules/.bin/start-storybook -p 3000",
+    "start": "cross-env SERVICE_DEPENDENCIES=production node_modules/.bin/start-storybook -p 3000",
     "eslint-report": "eslint --ext .js --ext .jsx . -f node_modules/eslint-html-reporter/reporter.js -o eslint.report.html",
     "translate": "cimpress-translations-cli -a 7f446c56-8c8e-438b-9cb2-64e5d7b1d89c -c ${CLIENT_ID} -s ${CLIENT_SECRET} -t ./src/locales/translations.json",
     "compile": "babel src -d lib --copy-files",
-    "storybook": "cross-env LOCAL_DEVELOPMENT=mock node_modules/.bin/start-storybook -p 9001 -c .storybook"
+    "storybook": "cross-env SERVICE_DEPENDENCIES=mocked node_modules/.bin/start-storybook -p 9001 -c .storybook"
   },
   "main": "lib/index.js",
   "files": [
