@@ -1,6 +1,6 @@
 {
   "name": "react-cimpress-fulfillers-components",
-  "version": "0.5.9",
+  "version": "0.5.10",
   "author": {
     "name": "Trdelnik Squad",
     "email": "TrdelnikSquad@cimpress.com"
@@ -26,7 +26,6 @@
     "@cimpress/react-components": "^3.0.0 || ^4.0.0 || ^5.0.0"
   },
   "dependencies": {
-    "@storybook/addon-knobs": "^3.4.11",
     "axios": "^0.18.0",
     "cimpress-customizr": "^1.1.1",
     "cimpress-fulfiller-identity": "^0.1.10",
@@ -42,6 +41,7 @@
   },
   "devDependencies": {
     "@cimpress/react-components": "^5.2.5",
+    "@storybook/addon-knobs": "^3.4.11",
     "@storybook/react": "^3.4.8",
     "auth0-sso-login": "^3.0.123",
     "aws-sdk": "^2.263.1",

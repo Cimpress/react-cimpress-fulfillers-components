@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.5.10] - 2018-10-24
+### Fixed
+- Move storybook to dev dependency
+
 ## [0.5.9] - 2018-10-24
 ### Changed
 - Increase `cimpress-fulfiller-identity` version to 0.1.10
