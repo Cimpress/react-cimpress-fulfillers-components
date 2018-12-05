@@ -1,5 +1,4 @@
 import i18n from 'i18next';
-import { reactI18nextModule } from 'react-i18next';
 
 let languages = require('./locales/translations.json');
 
@@ -11,7 +10,6 @@ function getI18nInstance() {
         i18n_instance = i18n.createInstance();
 
         i18n_instance
-            .use(reactI18nextModule)
             .init({
 
                 fallbackLng: 'eng',
