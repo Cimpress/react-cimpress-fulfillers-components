@@ -108,10 +108,12 @@ class FulfillerSelect extends React.Component {
     }
 
     async getRecentFulfillerIds() {
-        let settings = await this.customizrClient.getSettings(this.props.accessToken);
-        let recentFulfillerIds = settings.recentFulfillerIds || [];
-        this.setState({ recentFulfillerIds });
-        return recentFulfillerIds;
+        if (this.props.accessToken) {
+            let settings = await this.customizrClient.getSettings(this.props.accessToken);
+            let recentFulfillerIds = settings.recentFulfillerIds || [];
+            this.setState({ recentFulfillerIds });
+            return recentFulfillerIds;
+        }
     }
 
     async updateRecentFulfillerIds(fulfillerId) {
