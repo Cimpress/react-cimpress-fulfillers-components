@@ -92,7 +92,7 @@ class FulfillerSelect extends React.Component {
     }
 
     handleChange(e) {
-        if (e.fulfiller.fulfillerId === this.state.selectedFulfillerId) {
+        if (!e || e.fulfiller.fulfillerId === this.state.selectedFulfillerId) {
           return;
         }
 
