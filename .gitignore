@@ -3,4 +3,3 @@ src/locales
 *.pid
 main.js
 eslint.report.html
-lib
