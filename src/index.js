@@ -1,5 +1,3 @@
-import 'regenerator-runtime/runtime';
-
 import FulfillerSelect from './FulfillerSelect';
 import FulfillmentLocationField from './FulfillmentLocationField';
 import FulfillmentLocationTitle from './FulfillmentLocationTitle';
