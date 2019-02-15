@@ -118,17 +118,19 @@ class FulfillerSelect extends React.Component {
 
     async updateRecentFulfillerIds(fulfillerId) {
         // initial, strictly visual client-side update to circumvent a wait on GET Customizr
-        this.setState({ recentFulfillerIds: [fulfillerId].concat(this.state.recentFulfillerIds.filter(id => id !== fulfillerId)) });
+        this.setState({
+            recentFulfillerIds: [fulfillerId].concat((this.state.recentFulfillerIds || []).filter(id => id !== fulfillerId))
+        });
 
         // consistent server-side update
-        let recentFulfillerIds = await this.getRecentFulfillerIds();
+        let recentFulfillerIds = (await this.getRecentFulfillerIds()) || [];
         let update = { recentFulfillerIds: [fulfillerId].concat(recentFulfillerIds.filter(id => id !== fulfillerId)) };
         this.setState(update);
         this.customizrClient.putSettings(this.props.accessToken, update);
     }
 
     getOptions() {
-        let fulfillers = this.state.fulfillers || this.props.fulfillers;
+        let fulfillers = this.state.fulfillers || this.props.fulfillers || [];
 
         if (!fulfillers) {
             if (this.state.fetchingFulfillers) {
