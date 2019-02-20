@@ -43,7 +43,7 @@ class FulfillerSelect extends React.Component {
             fetchingFulfillers: true
         });
 
-        return getFulfillers(accessToken)
+        return getFulfillers(accessToken, { noCache: true })
             .then(fulfillers => {
                 fulfillers.forEach(f => this.fulfillerMap[f.fulfillerId] = f);
                 this.setState({
@@ -68,7 +68,9 @@ class FulfillerSelect extends React.Component {
         ])
             .then(() => {
                 if (this.state.recentFulfillerIds.length && !this.state.selectedFulfillerId) {
-                    this.setState({ selectedFulfillerId: this.state.recentFulfillerIds[0] }, () => {
+                    this.setState(
+                        { selectedFulfillerId: this.props.preselectMostRecent ? this.state.recentFulfillerIds[0] : null },
+                        () => {
                         if (this.props.onChange) {
                             this.props.onChange(this.fulfillerMap[this.state.recentFulfillerIds[0]]);
                         }
@@ -337,7 +339,8 @@ FulfillerSelect.propTypes = {
     includeArchived: PropTypes.bool,
     includeId: PropTypes.bool,
     includeInternalId: PropTypes.bool,
-    includeName: PropTypes.bool
+    includeName: PropTypes.bool,
+    preselectMostRecent: PropTypes.bool
 };
 
 FulfillerSelect.defaultProps = {
@@ -345,7 +348,8 @@ FulfillerSelect.defaultProps = {
     includeArchived: false,
     includeId: true,
     includeInternalId: false,
-    includeName: true
+    includeName: true,
+    preselectMostRecent: true
 };
 
 export default translate('translations', { i18n: getI18nInstance() })(FulfillerSelect);
