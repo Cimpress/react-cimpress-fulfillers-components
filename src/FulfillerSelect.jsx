@@ -69,7 +69,7 @@ class FulfillerSelect extends React.Component {
             .then(() => {
                 if (this.state.recentFulfillerIds.length && !this.state.selectedFulfillerId) {
                     this.setState(
-                        { selectedFulfillerId: this.props.preselectMostRecent ? this.state.recentFulfillerIds[0] : null },
+                        { selectedFulfillerId: this.props.autoSelectMostRecentMostRecent ? this.state.recentFulfillerIds[0] : null },
                         () => {
                         if (this.props.onChange) {
                             this.props.onChange(this.fulfillerMap[this.state.recentFulfillerIds[0]]);
@@ -340,7 +340,7 @@ FulfillerSelect.propTypes = {
     includeId: PropTypes.bool,
     includeInternalId: PropTypes.bool,
     includeName: PropTypes.bool,
-    preselectMostRecent: PropTypes.bool
+    autoSelectMostRecentMostRecent: PropTypes.bool
 };
 
 FulfillerSelect.defaultProps = {
@@ -349,7 +349,7 @@ FulfillerSelect.defaultProps = {
     includeId: true,
     includeInternalId: false,
     includeName: true,
-    preselectMostRecent: true
+    autoSelectMostRecentMostRecent: true
 };
 
 export default translate('translations', { i18n: getI18nInstance() })(FulfillerSelect);
