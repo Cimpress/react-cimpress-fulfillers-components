@@ -20,7 +20,7 @@ storiesOf('Production-like', module)
                                 includeId={boolean('includeId', false)}
                                 includeInternalId={boolean('includeInternalId', true)}
                                 includeName={boolean('includeName', true)}
-                                preselectMostRecent={boolean('preselectMostRecent', true)}
+                                autoSelectMostRecent={boolean('autoSelectMostRecent', true)}
                             />
                         </div>
                     </div>
