@@ -71,7 +71,7 @@ class FulfillerSelect extends React.Component {
                     this.setState(
                         { selectedFulfillerId: this.props.autoSelectMostRecent ? this.state.recentFulfillerIds[0] : null },
                         () => {
-                        if (this.props.onChange) {
+                        if (this.props.onChange && this.props.autoSelectMostRecent) {
                             this.props.onChange(this.fulfillerMap[this.state.recentFulfillerIds[0]]);
                         }
                     });
