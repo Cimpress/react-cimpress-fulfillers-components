@@ -19,6 +19,10 @@ npm install --save react-cimpress-fulfillers-components
 
 `FulfillerSelect` is a heavily customized fulfiller selection dropdown based on [react-virtualized-select](https://github.com/bvaughn/react-virtualized-select). Apart from allowing the user to select a fulfiller, the component also maintains a list of recently selected fulfillers for quick access on other pages. The component also automatically selects the most recently accessed fulfiller on subsequent page visits.
 
+#### FulfillerMultiSelect
+
+`FulfillerMultiSelect`, is a variant of `FulfillerSelect`, but with multi select. This components maintains it's own list of recently selected fulfillers.
+
 #### FulfillmentLocationField
 #### FulfillmentLocationListItem
 #### FulfillmentLocationList
