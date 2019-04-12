@@ -10,7 +10,7 @@ install:
 - npm install
 script:
 - npm run code-check
-- npm run translate
+- if [ "$TRAVIS_BRANCH" = "master" ]; then npm run translate; fi
 - npm run compile
 deploy:
   provider: npm
