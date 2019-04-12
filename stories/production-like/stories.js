@@ -16,6 +16,10 @@ storiesOf('Production-like', module)
                         <div className={'col-md-4'}>
                             <FulfillerSelect
                                 accessToken={auth.getAccessToken()}
+                                fulfillersFilterFunction={(f)=>{
+                                    console.log('f', f);
+                                    return f.name.includes('test');
+                                }}
                                 includeArchived={boolean('includeArchived', false)}
                                 includeId={boolean('includeId', false)}
                                 includeInternalId={boolean('includeInternalId', true)}
