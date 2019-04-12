@@ -148,13 +148,18 @@ class FulfillerSelect extends React.Component {
             }];
         }
 
-        let fulfillerOptions = fulfillers
+        let filteredFulfillers = fulfillers;
+        if (this.props.fulfillersFilterFunction) {
+            filteredFulfillers = filteredFulfillers.filter(this.props.fulfillersFilterFunction);
+        }
+
+        let fulfillerOptions = filteredFulfillers
             .filter(f => this.props.includeArchived || !f.archived)
             .map(f => ({
                 value: `${f.fulfillerId} ${f.name}`, // 'value' required for search and focus style change functionality
                 optionRenderer: this.fulfillerSingleOptionRenderer,
                 fulfiller: f
-            }))
+            }));
 
         let recentFulfillerOptions = this.state.recentFulfillerIds
             .slice(0, 5)
@@ -329,6 +334,7 @@ FulfillerSelect.propTypes = {
     // Either access token OR a list of fulfillers to display
     accessToken: PropTypes.string,
     fulfillers: PropTypes.array,
+    fulfillersFilterFunction: PropTypes.func,
 
     // functions and buttons
     onChange: PropTypes.func,
