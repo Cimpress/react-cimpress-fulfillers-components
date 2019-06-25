@@ -1,6 +1,6 @@
 {
   "name": "react-cimpress-fulfillers-components",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "author": {
     "name": "Trdelnik Squad",
     "email": "TrdelnikSquad@cimpress.com"
@@ -28,10 +28,10 @@
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
     "@babel/runtime": "^7.3.1",
-    "axios": "^0.18.0",
-    "cimpress-customizr": "^1.1.7",
-    "cimpress-fulfiller-identity": "^0.2.2",
-    "cimpress-fulfillment-location": "^0.1.10",
+    "axios": "^0.18.1",
+    "cimpress-customizr": "^1.1.8",
+    "cimpress-fulfiller-identity": "^0.3.1",
+    "cimpress-fulfillment-location": "^1.0.2",
     "i18next": "^11.3.2",
     "pope": "^2.0.2",
     "react-highlight-words": "^0.10.0",
@@ -52,11 +52,11 @@
     "aws-sdk": "^2.263.1",
     "babel-core": "^7.0.0-bridge.0",
     "babel-loader": "^8.0.5",
-    "cimpress-translations-cli": "^0.1.5",
+    "cimpress-translations-cli": "^0.1.6",
     "cross-env": "^5.2.0",
     "css-loader": "^0.28.11",
     "eslint": "^4.2.0",
-    "eslint-html-reporter": "^0.5.2",
+    "eslint-html-reporter": "^0.7.3",
     "eslint-plugin-react": "^7.5.1",
     "jest": "^23.1.0",
     "jwt-decode": "^2.2.0",
