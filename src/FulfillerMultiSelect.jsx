@@ -9,7 +9,7 @@ import { CustomizrClient } from 'cimpress-customizr';
 import '../styles/FulfillerSelect.css'
 
 import { getI18nInstance } from './i18n';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 let { Spinner } = shapes;
 
@@ -366,4 +366,4 @@ FulfillerMultiSelect.defaultProps = {
     autoSelectMostRecent: true
 };
 
-export default translate('translations', { i18n: getI18nInstance() })(FulfillerMultiSelect);
+export default withTranslation('translations', { i18n: getI18nInstance() })(FulfillerMultiSelect);

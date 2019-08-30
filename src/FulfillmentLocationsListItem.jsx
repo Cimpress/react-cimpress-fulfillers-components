@@ -4,7 +4,7 @@ import Highlighter from 'react-highlight-words';
 import Tooltip from '@cimpress/react-components/lib/Tooltip';
 
 import { getI18nInstance } from './i18n';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 class FulfillmentLocationsListItem extends React.Component {
 
@@ -162,5 +162,5 @@ FulfillmentLocationsListItem.defaultProps = {
     language: 'eng'
 };
 
-export default translate('translations', { i18n: getI18nInstance() })(FulfillmentLocationsListItem);
+export default withTranslation('translations', { i18n: getI18nInstance() })(FulfillmentLocationsListItem);
 

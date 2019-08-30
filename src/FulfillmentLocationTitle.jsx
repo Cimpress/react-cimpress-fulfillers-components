@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { getI18nInstance } from './i18n';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 class FulfillmentLocationTitle extends React.Component {
 
@@ -89,4 +89,4 @@ FulfillmentLocationTitle.defaultProps = {
     language: 'eng'
 };
 
-export default translate('translations', { i18n: getI18nInstance() })(FulfillmentLocationTitle);
+export default withTranslation('translations', { i18n: getI18nInstance() })(FulfillmentLocationTitle);

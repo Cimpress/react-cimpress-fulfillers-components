@@ -5,7 +5,7 @@ import Alert from '@cimpress/react-components/lib/Alert';
 import TextField from '@cimpress/react-components/lib/TextField';
 
 import { getI18nInstance } from './i18n';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 class FulfillmentLocationsList extends React.Component {
     constructor(props) {
@@ -321,4 +321,4 @@ FulfillmentLocationsList.defaultProps = {
     language: 'eng'
 };
 
-export default translate('translations', { i18n: getI18nInstance() })(FulfillmentLocationsList);
+export default withTranslation('translations', { i18n: getI18nInstance() })(FulfillmentLocationsList);
