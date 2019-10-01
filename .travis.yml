@@ -10,7 +10,6 @@ install:
 - npm install
 script:
 - npm run code-check
-- if [ "$TRAVIS_PULL_REQUEST_SLUG" = "Cimpress/react-cimpress-fulfillers-components" -o "$TRAVIS_PULL_REQUEST_SLUG" = "" -a "$TRAVIS_REPO_SLUG" = "Cimpress/react-cimpress-fulfillers-components" ]; then npm run translate; fi
 - npm run compile
 deploy:
   provider: npm
