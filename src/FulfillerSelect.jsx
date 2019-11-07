@@ -21,7 +21,7 @@ class FulfillerSelect extends React.Component {
 
         this.state = {
             fulfillers: undefined,
-            selectedFulfillerId: undefined,
+            selectedFulfillerId: props.selectedFulfillerId,
             recentFulfillerIds: [],
             fetchingFulfillers: true
         };
@@ -335,6 +335,7 @@ FulfillerSelect.propTypes = {
     accessToken: PropTypes.string,
     fulfillers: PropTypes.array,
     fulfillersFilterFunction: PropTypes.func,
+    selectedFulfillerId: PropTypes.string,
 
     // functions and buttons
     onChange: PropTypes.func,
