@@ -51,6 +51,19 @@ storiesOf('Fulfiller Selection sourced statically, with access token')
       onChange={action('selected')}
     />
   ))
+  .add('with everything included and a selected fulfiller passed', () => wrapInLoader(
+    <FulfillerSelect
+        accessToken='Bearer bear'
+        language={'eng'}
+        fulfillers={fulfillers}
+        includeArchived={true}
+        includeInternalId={true}
+        includeId={true}
+        includeName={true}
+        onChange={action('selected')}
+        selectedFulfillerId={'abcdef66'}
+    />
+  ))
   .add('with name, and both IDs included', () => wrapInLoader(
     <FulfillerSelect
       accessToken='Bearer bear'
