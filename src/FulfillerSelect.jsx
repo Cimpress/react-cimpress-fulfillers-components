@@ -36,6 +36,7 @@ class FulfillerSelect extends React.Component {
         this.fulfillerValueRenderer = this.fulfillerValueRenderer.bind(this);
         this.fulfillerWarningMessageOptionRenderer = this.fulfillerWarningMessageOptionRenderer.bind(this);
         this.fulfillerSpinnerOptionRenderer = this.fulfillerSpinnerOptionRenderer.bind(this);
+        this.onSelectedFulfillerChanged = this.onSelectedFulfillerChanged.bind(this);
     }
 
     fetchFulfillers(accessToken) {
@@ -90,23 +91,32 @@ class FulfillerSelect extends React.Component {
             return;
         }
 
-        this.refreshComponentData();
+        this.refreshComponentData()
+            .then(() => {
+                if (this.props.selectedFulfillerId) {
+                    this.onSelectedFulfillerChanged(this.props.selectedFulfillerId);
+                }
+            });
     }
 
     handleChange(e) {
         if (!e || e.fulfiller.fulfillerId === this.state.selectedFulfillerId) {
-          return;
+            return;
         }
 
         this.setState({
             selectedFulfillerId: e.fulfiller.fulfillerId
         });
 
+        this.onSelectedFulfillerChanged(e.fulfiller.fulfillerId);
+    }
+
+    onSelectedFulfillerChanged(fulfillerId) {
         if (this.props.onChange) {
-            this.props.onChange(this.fulfillerMap[e.fulfiller.fulfillerId]);
+            this.props.onChange(this.fulfillerMap[fulfillerId]);
         }
 
-        this.updateRecentFulfillerIds(e.fulfiller.fulfillerId);
+        this.updateRecentFulfillerIds(fulfillerId);
     }
 
     async getRecentFulfillerIds() {
