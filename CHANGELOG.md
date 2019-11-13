@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.3.1] - 2019-11-13
+### Fixed
+- Added call to update most recent fulfillers in Customizr when the fulfillerId was provided in props.
+
 ## [1.3.0] - 2019-11-07
 ### Added
 - Added `selectedFulfillerId` property to `FulfillerSelect` component, allowing setting of the selected fulfiller externally
