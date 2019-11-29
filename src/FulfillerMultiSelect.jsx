@@ -66,35 +66,32 @@ class FulfillerMultiSelect extends React.Component {
             });
     }
 
-    refreshComponentData() {
-        return Promise.all([
+    async refreshComponentData() {
+        const [fulfillers, recentFulfillerIds] = await Promise.all([
             !this.props.fulfillers
                 ? this.fetchFulfillers(this.props.accessToken)
                 : Promise.resolve(),
             this.getRecentFulfillerIds()
-        ])
-            .then((results) => {
-                const fulfillers = results[0];
-                const recentFulfillerIds = results[1];
-                let selectedFulfillerIds = [];
-                if (this.props.selectedFulfillerIds) {
-                    selectedFulfillerIds = fulfillers
-                        .find(fulfiller => this.props.selectedFulfillerIds.includes(fulfiller.fulfillerId))
-                        .map(fulfiller => fulfiller.fulfillerId);
-                } else if (recentFulfillerIds.length > 0 && this.props.autoSelectMostRecent) {
-                    selectedFulfillerIds = recentFulfillerIds;
-                }
+        ]);
 
-                this.setState({
-                    recentFulfillerIds,
-                    selectedFulfillerIds
-                },
-                () => {
-                    if (this.state.selectedFulfillerIds.length > 0) {
-                        this.onSelectedFulfillerChanged(this.state.selectedFulfillerIds);
-                    }
-                });
-            });
+        let selectedFulfillerIds = [];
+        if (this.props.selectedFulfillerIds) {
+            selectedFulfillerIds = fulfillers
+                .find(fulfiller => this.props.selectedFulfillerIds.includes(fulfiller.fulfillerId))
+                .map(fulfiller => fulfiller.fulfillerId);
+        } else if (recentFulfillerIds.length > 0 && this.props.autoSelectMostRecent) {
+            selectedFulfillerIds = recentFulfillerIds;
+        }
+
+        this.setState({
+            recentFulfillerIds,
+            selectedFulfillerIds
+        },
+        () => {
+            if (this.state.selectedFulfillerIds.length > 0) {
+                this.onSelectedFulfillerChanged(this.state.selectedFulfillerIds);
+            }
+        });
     }
 
     componentDidUpdate(prevProps) {
@@ -354,7 +351,6 @@ class FulfillerMultiSelect extends React.Component {
     }
 
     render() {
-        console.log('render')
         return (
             <div>
                 <SelectWrapper
@@ -407,7 +403,7 @@ FulfillerMultiSelect.defaultProps = {
     includeInternalId: false,
     includeName: true,
     autoSelectMostRecent: true,
-    multi: true
+    multi: false
 };
 
 export default translate('translations', { i18n: getI18nInstance() })(FulfillerMultiSelect);
