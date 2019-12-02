@@ -48,13 +48,10 @@ class FulfillerMultiSelect extends React.Component {
         return getFulfillers(accessToken, { noCache: true })
             .then(fulfillers => {
                 fulfillers.forEach(f => this.fulfillerMap[f.fulfillerId] = f);
-                const sortedFulfillers = fulfillers.sort((a, b) => a.name.localeCompare(b.name));
                 this.setState({
-                    fetchingFulfillers: false,
-                    fulfillers: sortedFulfillers
+                    fulfillers: fulfillers.sort((a, b) => a.name.localeCompare(b.name)),
+                    fetchingFulfillers: false
                 });
-
-                return sortedFulfillers;
             })
             .catch(e => {
                 this.setState({
@@ -71,7 +68,7 @@ class FulfillerMultiSelect extends React.Component {
                 : Promise.resolve(),
             this.getRecentFulfillerIds()
         ])
-            .then((results) => {
+            .then(results => {
                 if (!results[1]) {
                     return;
                 }
@@ -110,6 +107,10 @@ class FulfillerMultiSelect extends React.Component {
     }
 
     componentDidMount() {
+        if (!this.props.accessToken) {
+            return;
+        }
+
         this.refreshComponentData();
     }
 
@@ -130,7 +131,7 @@ class FulfillerMultiSelect extends React.Component {
         }
 
         this.setState({
-            selectedFulfillerIds: fulfillerIds,
+            selectedFulfillerIds: fulfillerIds
         });
 
         this.onSelectedFulfillerChanged(fulfillerIds);
@@ -157,6 +158,10 @@ class FulfillerMultiSelect extends React.Component {
     recentFulfillersChanged(fulfillerIds) {
         const recentFulfillerIds = this.state.recentFulfillerIds;
 
+        if (recentFulfillerIds.length === 0) {
+            return false;
+        }
+
         if (fulfillerIds > recentFulfillerIds) {
             return true;
         }
@@ -166,14 +171,13 @@ class FulfillerMultiSelect extends React.Component {
                 || fulfillerIds.any((fulfillerId, i) => recentFulfillerIds[i] === fulfillerId);
         }
 
-        return  fulfillerIds[0] === recentFulfillerIds[0];
+        return  fulfillerIds[0] !== recentFulfillerIds[0];
     }
 
     async updateRecentFulfillerIds(fulfillerIds) {
-        if (fulfillerIds.length === 0) {
+        if (!this.recentFulfillersChanged(fulfillerIds)) {
             return;
         }
-
 
         // initial, strictly visual client-side update to circumvent a wait on GET Customizr
         this.setState({
@@ -227,9 +231,9 @@ class FulfillerMultiSelect extends React.Component {
             }));
 
         let recentFulfillerOptions = this.state.recentFulfillerIds
-            .slice(0, this.state.selectedFulfillerIds.length + 4)
             .map(id => fulfillerOptions.find(f => f.fulfiller.fulfillerId === id))
             .filter(f => f)
+            .slice(0, 5)
             .map((f, index) => Object.assign({}, f, { value: `recent-${index}` })); // do not highlight or show in search results
 
         let recentFulfillersOptionGroupLabelOption = {
@@ -342,6 +346,7 @@ class FulfillerMultiSelect extends React.Component {
 
     formatTitle(fulfiller) {
         let content = null;
+
         if (this.props.includeName) {
             if (this.props.includeId && this.props.includeInternalId) {
                 content = <span>
@@ -422,7 +427,7 @@ FulfillerMultiSelect.propTypes = {
     i18n: PropTypes.any,
 
     // Either access token OR a list of fulfillers to display
-    accessToken: PropTypes.string.isRequired,
+    accessToken: PropTypes.string,
     fulfillers: PropTypes.array,
     fulfillersFilterFunction: PropTypes.func,
     selectedFulfillerIds: PropTypes.array,
@@ -448,7 +453,7 @@ FulfillerMultiSelect.defaultProps = {
     includeInternalId: false,
     includeName: true,
     autoSelectMostRecent: true,
-    multi: false
+    multi: true
 };
 
 export default translate('translations', { i18n: getI18nInstance() })(FulfillerMultiSelect);
