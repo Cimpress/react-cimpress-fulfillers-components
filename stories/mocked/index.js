@@ -10,7 +10,7 @@ import mock from 'xhr-mock';
 // NOTE: This mocks the services for ALL stories. Move it inside stories to achieve more granular approach.
 // NOTE:
 mock.setup();
-mock.get('https://fulfilleridentity.trdlnk.cimpress.io/v1/fulfillers', {
+mock.get(/https:\/\/fulfilleridentity\.trdlnk\.cimpress\.io\/v1\/fulfillers.*/, {
     statusCode: 200,
     body: fulfillers
 });
