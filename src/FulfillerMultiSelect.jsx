@@ -27,9 +27,7 @@ class FulfillerMultiSelect extends React.Component {
         };
 
         this.customizrClient = new CustomizrClient({
-            resource: this.props.multi
-                ? 'https://trdlnk.cimpress.io/fulfillerselect/multi'
-                : 'https://trdlnk.cimpress.io'
+            resource: 'https://trdlnk.cimpress.io'
         });
 
         this.handleChange = this.handleChange.bind(this);
@@ -66,32 +64,43 @@ class FulfillerMultiSelect extends React.Component {
             });
     }
 
-    async refreshComponentData() {
-        const [fulfillers, recentFulfillerIds] = await Promise.all([
+    refreshComponentData() {
+        return Promise.all([
             !this.props.fulfillers
                 ? this.fetchFulfillers(this.props.accessToken)
                 : Promise.resolve(),
             this.getRecentFulfillerIds()
-        ]);
+        ])
+            .then((results) => {
+                if (!results[1]) {
+                    return;
+                }
 
-        let selectedFulfillerIds = [];
-        if (this.props.selectedFulfillerIds) {
-            selectedFulfillerIds = fulfillers
-                .find(fulfiller => this.props.selectedFulfillerIds.includes(fulfiller.fulfillerId))
-                .map(fulfiller => fulfiller.fulfillerId);
-        } else if (recentFulfillerIds.length > 0 && this.props.autoSelectMostRecent) {
-            selectedFulfillerIds = recentFulfillerIds;
-        }
+                const { recentFulfillerIds, recentFulfillerIdsMulti } = results[1];
+                let fulfillerIdsToSelect = [];
+                if (this.props.selectedFulfillerIds) {
+                    fulfillerIdsToSelect = this.props.selectedFulfillerIds
+                } else if (recentFulfillerIds.length > 0 && this.props.autoSelectMostRecent) {
+                    fulfillerIdsToSelect = this.props.multi && recentFulfillerIdsMulti.length > 0
+                        ? recentFulfillerIdsMulti
+                        : recentFulfillerIds.slice(0, 1);
+                }
 
-        this.setState({
-            recentFulfillerIds,
-            selectedFulfillerIds
-        },
-        () => {
-            if (this.state.selectedFulfillerIds.length > 0) {
-                this.onSelectedFulfillerChanged(this.state.selectedFulfillerIds);
-            }
-        });
+                const selectedFulfillerIds = fulfillerIdsToSelect
+                    .map(fulfillerId => (
+                        this.fulfillerMap[fulfillerId] && this.fulfillerMap[fulfillerId].fulfillerId
+                    ));
+
+                this.setState({
+                    recentFulfillerIds,
+                    selectedFulfillerIds
+                },
+                () => {
+                    if (this.state.selectedFulfillerIds.length > 0) {
+                        this.onSelectedFulfillerChanged(this.state.selectedFulfillerIds);
+                    }
+                });
+            });
     }
 
     componentDidUpdate(prevProps) {
@@ -120,10 +129,8 @@ class FulfillerMultiSelect extends React.Component {
             return;
         }
 
-        // initial, strictly visual client-side update to circumvent a wait on GET Customizr
         this.setState({
             selectedFulfillerIds: fulfillerIds,
-            recentFulfillerIds: fulfillerIds.concat((this.state.recentFulfillerIds || []).filter(id => !fulfillerIds.includes(id)))
         });
 
         this.onSelectedFulfillerChanged(fulfillerIds);
@@ -140,20 +147,50 @@ class FulfillerMultiSelect extends React.Component {
     async getRecentFulfillerIds() {
         if (this.props.accessToken) {
             let settings = await this.customizrClient.getSettings(this.props.accessToken);
-            return settings.recentFulfillerIds || [];
+            return {
+                recentFulfillerIds: settings.recentFulfillerIds || [],
+                recentFulfillerIdsMulti: settings.recentFulfillerIdsMulti || []
+            };
         }
     }
 
+    recentFulfillersChanged(fulfillerIds) {
+        const recentFulfillerIds = this.state.recentFulfillerIds;
+
+        if (fulfillerIds > recentFulfillerIds) {
+            return true;
+        }
+
+        if (this.props.multi) {
+            return fulfillerIds.length !== recentFulfillerIds.length
+                || fulfillerIds.any((fulfillerId, i) => recentFulfillerIds[i] === fulfillerId);
+        }
+
+        return  fulfillerIds[0] === recentFulfillerIds[0];
+    }
+
     async updateRecentFulfillerIds(fulfillerIds) {
-        if (fulfillerIds.length === 0 || fulfillerIds.every(fulfillerId => this.state.recentFulfillerIds.includes(fulfillerId)) ) {
+        if (fulfillerIds.length === 0) {
             return;
         }
 
-        let recentFulfillerIds = (await this.getRecentFulfillerIds()) || [];
+
+        // initial, strictly visual client-side update to circumvent a wait on GET Customizr
+        this.setState({
+            recentFulfillerIds: fulfillerIds.concat((this.state.recentFulfillerIds || []).filter(id => !fulfillerIds.includes(id)))
+        });
+
+        let { recentFulfillerIds, recentFulfillerIdsMulti } = (await this.getRecentFulfillerIds()) || [];
         let update = {
-            recentFulfillerIds: fulfillerIds.concat((recentFulfillerIds || []).filter(id => !fulfillerIds.includes(id)))
+            recentFulfillerIds: fulfillerIds.concat((recentFulfillerIds || []).filter(id => !fulfillerIds.includes(id))),
+            recentFulfillerIdsMulti
         };
         this.setState(update);
+
+        if (this.props.multi) {
+            update.recentFulfillerIdsMulti = fulfillerIds // store the last multi-select selection
+        }
+
         this.customizrClient.putSettings(this.props.accessToken, update);
     }
 
@@ -173,7 +210,10 @@ class FulfillerMultiSelect extends React.Component {
                 optionRenderer: this.fulfillerWarningMessageOptionRenderer
             }];
         }
-        let filteredFulfillers = fulfillers.filter(fulfiller => !this.state.selectedFulfillerIds.includes(fulfiller.fulfillerId));
+        let filteredFulfillers = this.props.multi
+            ? fulfillers.filter(fulfiller => !this.state.selectedFulfillerIds.includes(fulfiller.fulfillerId))
+            : fulfillers;
+
         if (this.props.fulfillersFilterFunction) {
             filteredFulfillers = filteredFulfillers.filter(this.props.fulfillersFilterFunction);
         }
@@ -187,7 +227,7 @@ class FulfillerMultiSelect extends React.Component {
             }));
 
         let recentFulfillerOptions = this.state.recentFulfillerIds
-            .slice(0, 5)
+            .slice(0, this.state.selectedFulfillerIds.length + 4)
             .map(id => fulfillerOptions.find(f => f.fulfiller.fulfillerId === id))
             .filter(f => f)
             .map((f, index) => Object.assign({}, f, { value: `recent-${index}` })); // do not highlight or show in search results
@@ -302,7 +342,6 @@ class FulfillerMultiSelect extends React.Component {
 
     formatTitle(fulfiller) {
         let content = null;
-
         if (this.props.includeName) {
             if (this.props.includeId && this.props.includeInternalId) {
                 content = <span>
@@ -342,12 +381,18 @@ class FulfillerMultiSelect extends React.Component {
             : fulfillers[0];
     }
 
-    mapFulfillersToValues(fulfillerIds) {
-        return this.mapFulfillerIdsToFulfillers(fulfillerIds)
-            .map(fulfiller => ({
+    mapFulfillerIdsToValues(fulfillerIds) {
+        const values = fulfillerIds.map(fulfillerId => {
+            const fulfiller = this.fulfillerMap[fulfillerId];
+            return {
                 fulfiller: fulfiller,
                 value: `${fulfiller.fulfillerId} ${fulfiller.name}`
-            }))
+            }
+        });
+
+        return this.props.multi
+            ? values
+            : values[0];
     }
 
     render() {
@@ -356,7 +401,7 @@ class FulfillerMultiSelect extends React.Component {
                 <SelectWrapper
                     selectedSelect={VirtualizedSelect}
                     label={this.props.label || this.tt('label')}
-                    value={this.mapFulfillersToValues(this.state.selectedFulfillerIds)}
+                    value={this.mapFulfillerIdsToValues(this.state.selectedFulfillerIds)}
                     options={this.getOptions()}
                     noResultsText={this.tt('no-results-found')}
                     clearable={this.props.multi}
