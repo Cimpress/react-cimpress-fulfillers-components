@@ -156,7 +156,7 @@ class FulfillerMultiSelect extends React.Component {
         if (!this.props.multi
             && (fulfillerIds.length === 0 || fulfillerIds[0] === this.recentFulfillerIds[0])
         ) {
-            return false;
+            return;
         }
 
         // Latest fulfiller ID is the most recent
@@ -438,7 +438,7 @@ FulfillerMultiSelect.propTypes = {
 FulfillerMultiSelect.defaultProps = {
     language: 'eng',
     includeArchived: false,
-    includeId: true,
+    includeId: false,
     includeInternalId: false,
     includeName: true,
     autoSelectMostRecent: true,
