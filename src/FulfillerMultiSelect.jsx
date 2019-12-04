@@ -78,7 +78,7 @@ class FulfillerMultiSelect extends React.Component {
                 if (this.props.selectedFulfillerIds) {
                     fulfillerIdsToSelect = this.props.selectedFulfillerIds
                 } else if (recentFulfillerIds.length > 0 && this.props.autoSelectMostRecent) {
-                    fulfillerIdsToSelect = this.props.multi && recentFulfillerIdsMulti.length > 0
+                    fulfillerIdsToSelect = this.props.multi
                         ? recentFulfillerIdsMulti
                         : recentFulfillerIds.slice(0, 1);
                 }
@@ -86,7 +86,8 @@ class FulfillerMultiSelect extends React.Component {
                 const selectedFulfillerIds = fulfillerIdsToSelect
                     .map(fulfillerId => (
                         this.fulfillerMap[fulfillerId] && this.fulfillerMap[fulfillerId].fulfillerId
-                    ));
+                    ))
+                    .filter(fulfillerId => fulfillerId);
 
                 this.setState({
                     recentFulfillerIds,
@@ -94,7 +95,8 @@ class FulfillerMultiSelect extends React.Component {
                 },
                 () => {
                     if (this.state.selectedFulfillerIds.length > 0) {
-                        this.onSelectedFulfillerChanged(this.state.selectedFulfillerIds);
+                        const updateCustomizrSettings = !!this.props.selectedFulfillerIds;
+                        this.onSelectedFulfillerChanged(this.state.selectedFulfillerIds, updateCustomizrSettings);
                     }
                 });
             });
@@ -120,15 +122,8 @@ class FulfillerMultiSelect extends React.Component {
         }
 
         const fulfillerIds = this.props.multi
-            ? e.map(f => f.fulfiller
-                ? f.fulfiller.fulfillerId
-                : f.fulfillerId
-            )
+            ? e.map(f => f.fulfiller.fulfillerId)
             : [e.fulfiller.fulfillerId];
-
-        if (fulfillerIds === this.state.selectedFulfillerIds) {
-            return;
-        }
 
         this.setState({
             selectedFulfillerIds: fulfillerIds
@@ -137,12 +132,14 @@ class FulfillerMultiSelect extends React.Component {
         this.onSelectedFulfillerChanged(fulfillerIds);
     }
 
-    onSelectedFulfillerChanged(fulfillerIds) {
+    onSelectedFulfillerChanged(fulfillerIds, updateCustomizrSettings = true) {
         if (this.props.onChange) {
             this.props.onChange(this.mapFulfillerIdsToFulfillers(fulfillerIds));
         }
 
-        this.updateRecentFulfillerIds(fulfillerIds);
+        if (updateCustomizrSettings) {
+            this.updateRecentFulfillerIds(fulfillerIds);
+        }
     }
 
     async getRecentFulfillerIds() {
@@ -155,44 +152,36 @@ class FulfillerMultiSelect extends React.Component {
         }
     }
 
-    recentFulfillersChanged(fulfillerIds) {
-        const recentFulfillerIds = this.state.recentFulfillerIds;
-
-        if (recentFulfillerIds.length === 0) {
+    async updateRecentFulfillerIds(fulfillerIds) {
+        if (!this.props.multi
+            && (fulfillerIds.length === 0 || fulfillerIds[0] === this.recentFulfillerIds[0])
+        ) {
             return false;
         }
 
-        if (fulfillerIds > recentFulfillerIds) {
-            return true;
-        }
-
-        if (this.props.multi) {
-            return fulfillerIds.length !== recentFulfillerIds.length
-                || fulfillerIds.any((fulfillerId, i) => recentFulfillerIds[i] === fulfillerId);
-        }
-
-        return  fulfillerIds[0] !== recentFulfillerIds[0];
-    }
-
-    async updateRecentFulfillerIds(fulfillerIds) {
-        if (!this.recentFulfillersChanged(fulfillerIds)) {
-            return;
-        }
+        // Latest fulfiller ID is the most recent
+        const orderedFulfillerIds = fulfillerIds
+            .slice()
+            .reverse();
 
         // initial, strictly visual client-side update to circumvent a wait on GET Customizr
         this.setState({
-            recentFulfillerIds: fulfillerIds.concat((this.state.recentFulfillerIds || []).filter(id => !fulfillerIds.includes(id)))
+            recentFulfillerIds: orderedFulfillerIds
+                .concat((this.state.recentFulfillerIds || [])
+                .filter(id => !fulfillerIds.includes(id)))
         });
 
         let { recentFulfillerIds, recentFulfillerIdsMulti } = (await this.getRecentFulfillerIds()) || [];
         let update = {
-            recentFulfillerIds: fulfillerIds.concat((recentFulfillerIds || []).filter(id => !fulfillerIds.includes(id))),
+            recentFulfillerIds: orderedFulfillerIds
+                .concat((recentFulfillerIds)
+                .filter(id => !fulfillerIds.includes(id))),
             recentFulfillerIdsMulti
         };
         this.setState(update);
 
         if (this.props.multi) {
-            update.recentFulfillerIdsMulti = fulfillerIds // store the last multi-select selection
+            update.recentFulfillerIdsMulti = fulfillerIds; // store the last multi-select selection every time
         }
 
         this.customizrClient.putSettings(this.props.accessToken, update);

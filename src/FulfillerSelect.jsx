@@ -27,7 +27,11 @@ class FulfillerSelect extends React.Component {
                     onChange={this.props.onChange}
                     t={this.props.t}
 
-                    selectedFulfillerIds={this.props.selectedFulfillerId ? [this.props.selectedFulfillerId] : undefined}
+                    selectedFulfillerIds={
+                        this.props.selectedFulfillerId
+                            ? [this.props.selectedFulfillerId]
+                            : undefined
+                    }
                     multi={false}
                 />
             </div>
