@@ -154,7 +154,7 @@ class FulfillerMultiSelect extends React.Component {
 
     async updateRecentFulfillerIds(fulfillerIds) {
         if (!this.props.multi
-            && (fulfillerIds.length === 0 || fulfillerIds[0] === this.recentFulfillerIds[0])
+            && (fulfillerIds.length === 0 || fulfillerIds[0] === this.state.recentFulfillerIds[0])
         ) {
             return;
         }
