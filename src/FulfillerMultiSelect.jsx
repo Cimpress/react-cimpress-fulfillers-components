@@ -94,7 +94,7 @@ class FulfillerMultiSelect extends React.Component {
                     selectedFulfillerIds
                 },
                 () => {
-                    if (this.state.selectedFulfillerIds.length > 0) {
+                    if (this.state.selectedFulfillerIds.length > 0 || this.props.multi) {
                         const updateCustomizrSettings = !!this.props.selectedFulfillerIds;
                         this.onSelectedFulfillerChanged(this.state.selectedFulfillerIds, updateCustomizrSettings);
                     }
