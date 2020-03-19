@@ -10,6 +10,7 @@ import '../styles/FulfillerSelect.css'
 
 import { getI18nInstance } from './i18n';
 import { translate } from 'react-i18next';
+import { EnvironmentKey } from "./utils/consts";
 
 let { Spinner } = shapes;
 
@@ -432,7 +433,8 @@ FulfillerMultiSelect.propTypes = {
     includeInternalId: PropTypes.bool,
     includeName: PropTypes.bool,
     autoSelectMostRecent: PropTypes.bool,
-    multi: PropTypes.bool
+    multi: PropTypes.bool,
+    env: PropTypes.string
 };
 
 FulfillerMultiSelect.defaultProps = {
@@ -442,7 +444,8 @@ FulfillerMultiSelect.defaultProps = {
     includeInternalId: false,
     includeName: true,
     autoSelectMostRecent: true,
-    multi: true
+    multi: true,
+    env: EnvironmentKey.Production
 };
 
 export default translate('translations', { i18n: getI18nInstance() })(FulfillerMultiSelect);
