@@ -6,6 +6,7 @@ import '../styles/FulfillerSelect.css'
 
 import { getI18nInstance } from './i18n';
 import { translate } from 'react-i18next';
+import { EnvironmentKey } from "./utils/consts";
 
 class FulfillerSelect extends React.Component {
 
@@ -60,7 +61,8 @@ FulfillerSelect.propTypes = {
     includeId: PropTypes.bool,
     includeInternalId: PropTypes.bool,
     includeName: PropTypes.bool,
-    autoSelectMostRecent: PropTypes.bool
+    autoSelectMostRecent: PropTypes.bool,
+    env: PropTypes.string
 };
 
 FulfillerSelect.defaultProps = {
@@ -69,7 +71,8 @@ FulfillerSelect.defaultProps = {
     includeId: true,
     includeInternalId: false,
     includeName: true,
-    autoSelectMostRecent: true
+    autoSelectMostRecent: true,
+    env: EnvironmentKey.Production
 };
 
 export default translate('translations', { i18n: getI18nInstance() })(FulfillerSelect);

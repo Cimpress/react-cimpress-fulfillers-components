@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.4.1] - 2020-03-19
+### Added
+- Added an option specify Fulfiller Identity environment
+
 ## [1.3.2] - 2019-12-04
 ### Fixed
 - Fixed several issues with FulfillerMultiSelect and made FulfillerSelect use FulfillerMultiSelect to reduce code duplication
@@ -26,7 +30,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [1.2.0] - 2019-04-12
 ### Added
-- `FulfillerSelect` and `FulfillerMultiSelect` now provide an option to filter rendered fulfillers. Added 'fulfillersFilferFunction' property. 
+- `FulfillerSelect` and `FulfillerMultiSelect` now provide an option to filter rendered fulfillers. Added 'fulfillersFilferFunction' property.
 
 ## [1.1.0] - 2019-04-09
 ### Added
@@ -68,7 +72,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [0.5.13] - 2018-12-04
 ### Fixed
-- Do not use reactI18nextModule from react-i18next 
+- Do not use reactI18nextModule from react-i18next
 
 ## [0.5.12] - 2018-12-04
 ### Fixed
@@ -88,7 +92,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [0.5.8] - 2018-10-19
 ### Changed
-- Updated development workflow, no functional change 
+- Updated development workflow, no functional change
 
 ## [0.5.7] - 2018-10-19
 ### Changed
@@ -96,16 +100,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [0.5.6] - 2018-10-12
 ### Changed
-- Dependencies updates, no functional change 
+- Dependencies updates, no functional change
 
 ## [0.5.5] - 2018-09-20
 ### Fixed
 -  FulfillmentLocationList fix can not read property length of null
--  FulfillmentLocationListItem fix search characters highlighting issue, invalid regular expression 
+-  FulfillmentLocationListItem fix search characters highlighting issue, invalid regular expression
 
 ## [0.5.2] - 2018-07-20
 ### Fixed
-- Move react and @cimpress/react-components as peer dependencies 
+- Move react and @cimpress/react-components as peer dependencies
 
 ## [0.5.0] - 2018-07-20
 ### Changed
