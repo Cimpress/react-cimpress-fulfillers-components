@@ -10,7 +10,7 @@ function getFulfillers(token, env, options) {
                 : null);
 
     if (fulfillerIdentity === null) {
-        throw new Error('Incorrect environment provided')
+        throw new Error(`Incorrect environment provided: "${env}"`)
     }
 
     return fulfillerIdentity.getFulfillers(options)

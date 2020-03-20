@@ -46,7 +46,7 @@ class FulfillerMultiSelect extends React.Component {
             fetchingFulfillers: true
         });
 
-        return getFulfillers(accessToken, { noCache: true })
+        return getFulfillers(accessToken, this.props.env,{ noCache: true })
             .then(fulfillers => {
                 fulfillers.forEach(f => this.fulfillerMap[f.fulfillerId] = f);
                 this.setState({
@@ -104,7 +104,7 @@ class FulfillerMultiSelect extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.accessToken !== this.props.accessToken) {
+        if ((prevProps.accessToken !== this.props.accessToken) || (prevProps.env !== this.props.env) ) {
             this.refreshComponentData();
         }
     }

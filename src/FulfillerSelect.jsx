@@ -34,6 +34,7 @@ class FulfillerSelect extends React.Component {
                             : undefined
                     }
                     multi={false}
+                    env={this.props.env}
                 />
             </div>
         )
