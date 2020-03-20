@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { withKnobs, boolean } from '@storybook/addon-knobs';
+import { withKnobs, boolean, select } from '@storybook/addon-knobs';
 import Authenticated from './Authenticated';
 import auth from './auth';
 
@@ -22,6 +22,7 @@ storiesOf('Production-like', module)
                                 includeInternalId={boolean('includeInternalId', true)}
                                 includeName={boolean('includeName', true)}
                                 autoSelectMostRecent={boolean('autoSelectMostRecent', true)}
+                                env={select('Environment', {"production": "Production", "staging": "Staging"}, "production")}
                             />
                         </div>
                     </div>
@@ -42,6 +43,7 @@ storiesOf('Production-like', module)
                                 includeInternalId={boolean('includeInternalId', true)}
                                 includeName={boolean('includeName', true)}
                                 autoSelectMostRecent={boolean('autoSelectMostRecent', true)}
+                                env={select('Environment', {"production": "Production", "staging": "Staging"}, "production")}
                             />
                         </div>
                     </div>
