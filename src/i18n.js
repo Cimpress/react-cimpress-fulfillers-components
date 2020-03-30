@@ -1,12 +1,11 @@
 import i18n from 'i18next';
 
-let languages = require('./locales/translations.json');
 const en = require('./locales/en-US/react-fulfillers');
 const de = require('./locales/de-DE/react-fulfillers');
 const fr = require('./locales/fr-FR/react-fulfillers');
 const it = require('./locales/it-IT/react-fulfillers');
 const nl = require('./locales/nl-NL/react-fulfillers');
-const ja = require('./locales/ja-JP/react-fulfillers/');
+const ja = require('./locales/ja-JP/react-fulfillers');
 
 let i18n_instance = null;
 
@@ -17,16 +16,20 @@ function getI18nInstance() {
 
         i18n_instance
             .init({
-
                 fallbackLng: 'en',
-
                 resources: {
                     en: { translations: en },
+                    eng: { translations: en },
                     de: { translations: de },
+                    deu: { translations: de },
                     fr: { translations: fr },
+                    fra: { translations: fr },
                     it: { translations: it },
+                    ita: { translations: it },
                     nl: { translations: nl },
+                    nld: { translations: nl },
                     ja: { translations: ja },
+                    jpn: { translations: ja },
                 },
 
                 ns: ['translations'],

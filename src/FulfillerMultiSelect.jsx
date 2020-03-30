@@ -438,7 +438,7 @@ FulfillerMultiSelect.propTypes = {
 };
 
 FulfillerMultiSelect.defaultProps = {
-    language: 'eng',
+    language: 'en',
     includeArchived: false,
     includeId: false,
     includeInternalId: false,

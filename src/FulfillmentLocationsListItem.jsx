@@ -56,7 +56,7 @@ class FulfillmentLocationsListItem extends React.Component {
         if (!this.props.onClick) {
             return (
                 <h5 style={this.style({ verticalAlign: "middle" })}>
-                    {this.props.isRecent 
+                    {this.props.isRecent
                         ? <Tooltip contents={this.tt("recent-location")} direction={"top"}><i className="fa fa-clock-o"></i></Tooltip>
                         : <i className="fa fa-map-marker"></i>}
                     <span>&nbsp;</span>
@@ -71,7 +71,7 @@ class FulfillmentLocationsListItem extends React.Component {
         return (
             <h5 onClick={this.onSelected.bind(this)}
                 style={this.style({ cursor: "pointer", verticalAlign: "middle" })}>
-                {this.props.isRecent 
+                {this.props.isRecent
                     ? <Tooltip contents={this.tt("recent-location")} direction={"top"}><i className="fa fa-clock-o"></i></Tooltip>
                     : <i className="fa fa-map-marker"></i>}
                 <span>&nbsp;</span>
@@ -159,7 +159,7 @@ FulfillmentLocationsListItem.defaultProps = {
     additionalColumnRenderer: undefined,
     customTitleRenderer: undefined,
     isRecent: false,
-    language: 'eng'
+    language: 'en'
 };
 
 export default translate('translations', { i18n: getI18nInstance() })(FulfillmentLocationsListItem);

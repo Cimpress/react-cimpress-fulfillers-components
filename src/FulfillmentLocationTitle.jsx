@@ -86,7 +86,7 @@ FulfillmentLocationTitle.propTypes = {
 FulfillmentLocationTitle.defaultProps = {
     showInternalIds: true,
     disableInlineStyles: false,
-    language: 'eng'
+    language: 'en'
 };
 
 export default translate('translations', { i18n: getI18nInstance() })(FulfillmentLocationTitle);
