@@ -100,7 +100,7 @@ FulfillmentLocationField.propTypes = {
 };
 
 FulfillmentLocationField.defaultProps = {
-    language: 'eng',
+    language: 'en',
     showInternalIds: true,
     showFulfiller: true,
     showFulfillmentLocation: true

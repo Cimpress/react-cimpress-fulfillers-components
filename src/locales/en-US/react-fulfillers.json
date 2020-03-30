@@ -1,0 +1,23 @@
+{
+    "cancel": "Cancel",
+    "fulfiller-id": "Fulfiller (ID)",
+    "location-name": "Name",
+    "no-results-found": "No results found",
+    "too-many-locations-found": "Too many results found",
+    "label": "Select a fulfiller",
+    "loading": "Loading...",
+    "field-btn-caption": "Change...",
+    "fulfiller-name": "Fulfiller Name",
+    "search-label": "Search...",
+    "misconfigured": "Misconfigured",
+    "no-data": "No data",
+    "name": "Name",
+    "recent-fulfillers": "Your recent fulfillers",
+    "location-id": "Location (ID)",
+    "all-fulfillers": "All fulfillers",
+    "location": "Location",
+    "fulfiller": "Fulfiller",
+    "searching-possible-by": "Searching is possible by",
+    "id": "ID",
+    "recent-location": "Recent location"
+}

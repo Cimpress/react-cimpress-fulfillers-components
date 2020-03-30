@@ -67,7 +67,7 @@ FulfillerSelect.propTypes = {
 };
 
 FulfillerSelect.defaultProps = {
-    language: 'eng',
+    language: 'en',
     includeArchived: false,
     includeId: true,
     includeInternalId: false,

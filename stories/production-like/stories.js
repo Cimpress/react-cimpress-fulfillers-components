@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { withKnobs, boolean, select } from '@storybook/addon-knobs';
+import { withKnobs, boolean, select, text } from '@storybook/addon-knobs';
 import Authenticated from './Authenticated';
 import auth from './auth';
 
@@ -15,6 +15,7 @@ storiesOf('Production-like', module)
                     <div className={'row'}>
                         <div className={'col-md-4'}>
                             <FulfillerSelect
+                                language={text('language', 'en')}
                                 accessToken={auth.getAccessToken()}
                                 fulfillersFilterFunction={()=> true }
                                 includeArchived={boolean('includeArchived', false)}
@@ -37,6 +38,7 @@ storiesOf('Production-like', module)
                     <div className={'row'}>
                         <div className={'col-md-4'}>
                             <FulfillerMultiSelect
+                                language={text('language', 'en')}
                                 accessToken={auth.getAccessToken()}
                                 includeArchived={boolean('includeArchived', false)}
                                 includeId={boolean('includeId', false)}

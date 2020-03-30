@@ -1,0 +1,23 @@
+{
+    "cancel": "Annulla",
+    "fulfiller-id": "Addetto all’evasione (ID)",
+    "location-name": "Nome",
+    "no-results-found": "Nessun risultato trovato",
+    "too-many-locations-found": "Troppi risultati trovati",
+    "label": "Seleziona un addetto all&#39;evasione",
+    "loading": "Caricamento in corso...",
+    "field-btn-caption": "Modifica...",
+    "fulfiller-name": "Nome dell’addetto all’evasione",
+    "search-label": "Cerca...",
+    "misconfigured": "Configurazione errata",
+    "no-data": "Nessun dato",
+    "name": "Nome",
+    "recent-fulfillers": "Addetti all’evasione recenti",
+    "location-id": "Ubicazione (ID)",
+    "all-fulfillers": "Tutti gli addetti all&#39;evasione",
+    "location": "Ubicazione",
+    "fulfiller": "Addetto all’evasione",
+    "searching-possible-by": "È possibile la ricerca per",
+    "id": "ID",
+    "recent-location": "Ubicazione recente"
+}

@@ -318,7 +318,7 @@ FulfillmentLocationsList.defaultProps = {
     additionalColumnRenderer: undefined,
     showCancelButton: true,
     customTitleRenderer: undefined,
-    language: 'eng'
+    language: 'en'
 };
 
 export default translate('translations', { i18n: getI18nInstance() })(FulfillmentLocationsList);
