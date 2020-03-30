@@ -1,0 +1,23 @@
+{
+    "cancel": "キャンセル",
+    "fulfiller-id": "フルフィルメント業者(ID)",
+    "location-name": "名前",
+    "no-results-found": "該当する結果が見つかりませんでした",
+    "too-many-locations-found": "該当する結果が多すぎます",
+    "label": "フルフィルメント業者を選択",
+    "loading": "ローディング中...",
+    "field-btn-caption": "変更...",
+    "fulfiller-name": "フルフィルメント業者名",
+    "search-label": "検索...",
+    "misconfigured": "誤設定",
+    "no-data": "データなし",
+    "name": "名前",
+    "recent-fulfillers": "あなたの最近のフルフィルメント業者",
+    "location-id": "ロケーション(ID)",
+    "all-fulfillers": "全てのフルフィルメント業者",
+    "location": "ロケーション",
+    "fulfiller": "フルフィルメント業者",
+    "searching-possible-by": "検索可能なカテゴリ",
+    "id": "ID",
+    "recent-location": "最近のロケーション"
+}

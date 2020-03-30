@@ -1,0 +1,23 @@
+{
+    "cancel": "Annuler",
+    "fulfiller-id": "Fournisseur (ID)",
+    "location-name": "Nom",
+    "no-results-found": "Résultat introuvable",
+    "too-many-locations-found": "Les résultats trouvés sont trop nombreux",
+    "label": "Sélectionnez un fournisseur",
+    "loading": "Chargement en cours...",
+    "field-btn-caption": "Changer...",
+    "fulfiller-name": "Nom du fournisseur",
+    "search-label": "Rechercher...",
+    "misconfigured": "Mal configuré",
+    "no-data": "Aucune donnée",
+    "name": "Nom",
+    "recent-fulfillers": "Vos fournisseurs récents",
+    "location-id": "Site (ID)",
+    "all-fulfillers": "Tous les fournisseurs",
+    "location": "Emplacement",
+    "fulfiller": "Fournisseur",
+    "searching-possible-by": "La recherche peut être effectuée par",
+    "id": "ID",
+    "recent-location": "Site récent"
+}

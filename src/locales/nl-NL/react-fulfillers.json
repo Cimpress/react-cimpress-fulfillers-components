@@ -1,0 +1,23 @@
+{
+    "cancel": "Annuleren",
+    "fulfiller-id": "Producent (ID)",
+    "location-name": "Naam",
+    "no-results-found": "Geen resultaten gevonden",
+    "too-many-locations-found": "Er zijn te veel resultaten gevonden",
+    "label": "Selecteer een producent",
+    "loading": "Laden...",
+    "field-btn-caption": "Wijzigen...",
+    "fulfiller-name": "Naam producent",
+    "search-label": "Zoeken...",
+    "misconfigured": "Onjuist ingesteld",
+    "no-data": "Geen gegevens",
+    "name": "Naam",
+    "recent-fulfillers": "Uw recente producenten",
+    "location-id": "Locatie (ID)",
+    "all-fulfillers": "Alle producenten",
+    "location": "Locatie",
+    "fulfiller": "Producent",
+    "searching-possible-by": "U kunt zoeken op",
+    "id": "ID",
+    "recent-location": "Recente locatie"
+}
