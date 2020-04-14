@@ -6,6 +6,7 @@ const fr = require('./locales/fr-FR/react-fulfillers');
 const it = require('./locales/it-IT/react-fulfillers');
 const nl = require('./locales/nl-NL/react-fulfillers');
 const ja = require('./locales/ja-JP/react-fulfillers');
+const zh = require('./locales/zh-CN/react-fulfillers');
 
 let i18n_instance = null;
 
@@ -30,6 +31,9 @@ function getI18nInstance() {
                     nld: { translations: nl },
                     ja: { translations: ja },
                     jpn: { translations: ja },
+                    zh: { translations: zh },
+                    chi: { translations: zh },
+                    zho: { translations: zh },
                 },
 
                 ns: ['translations'],

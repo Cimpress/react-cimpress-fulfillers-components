@@ -1,0 +1,23 @@
+{
+    "cancel": "取消",
+    "fulfiller-id": "履行人（编号）",
+    "location-name": "姓名",
+    "no-results-found": "未找到结果",
+    "too-many-locations-found": "找到太多结果",
+    "label": "选择一位履行人",
+    "loading": "正在加载...",
+    "field-btn-caption": "变更...",
+    "fulfiller-name": "履行人姓名",
+    "search-label": "搜索...",
+    "misconfigured": "配置错误",
+    "no-data": "无数据",
+    "name": "姓名",
+    "recent-fulfillers": "您的当前履行人",
+    "location-id": "位置（编号）",
+    "all-fulfillers": "所有履行人",
+    "location": "位置",
+    "fulfiller": "履行人",
+    "searching-possible-by": "可通过以下信息进行搜索",
+    "id": "编号",
+    "recent-location": "最近位置"
+}
