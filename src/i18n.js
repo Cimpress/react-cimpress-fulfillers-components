@@ -1,12 +1,12 @@
 import i18n from 'i18next';
 
-const en = require('./locales/en-US/react-fulfillers');
-const de = require('./locales/de-DE/react-fulfillers');
-const fr = require('./locales/fr-FR/react-fulfillers');
-const it = require('./locales/it-IT/react-fulfillers');
-const nl = require('./locales/nl-NL/react-fulfillers');
-const ja = require('./locales/ja-JP/react-fulfillers');
-const zh = require('./locales/zh-CN/react-fulfillers');
+const en = require('./locales/en-US/react-fulfillers.json');
+const de = require('./locales/de-DE/react-fulfillers.json');
+const fr = require('./locales/fr-FR/react-fulfillers.json');
+const it = require('./locales/it-IT/react-fulfillers.json');
+const nl = require('./locales/nl-NL/react-fulfillers.json');
+const ja = require('./locales/ja-JP/react-fulfillers.json');
+const zh = require('./locales/zh-CN/react-fulfillers.json');
 
 let i18n_instance = null;
 
